@@ -1,16 +1,40 @@
-## Hi there 👋
+# Projeto Cidadao
 
-<!--
-**projetocidadao/projetocidadao** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+---
 
-Here are some ideas to get you started:
+# Sistema de Transparéncia S�blica
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+Um sistema de transparencia pòblica que mapeia os 3 poderes (Executivo, Legislativo, Judiciario) ≈ ꁸ�� Kó e funnços, regras, licitacoes, contratos e dados qíblicos para fiscalação cidadóa.
+
+---
+
+# Missão do Projeto
+
+- Mapear os trés publicos: executivo, legislativo, judiciario
+- Organizar a strutura informacional por únio de dados pâlicos
+- Facilitar a fiscalização cidadóa de aódeico módeico
+- Promover transparéncia real sobre o Estado
+
+---
+
+# Estrutura Inicial
+
+Desenvolvimento e hospedagem gratuito, com férbia de contribuicao da comunidade.
+
+--
+
+# Contribuir
+
+Assine como code aborto! é suportandos de contribuicao aborto que desenvolva esse projeto.
+
+--
+
+# Licença
+- MIT
+Esse projeto esté licenciado com MIT. J à livberde de obrigan de copylevd.
+
+--
+
+# Contato
+
+Para ficar nessa doa dé simplemente o executar, congrue em https://github.com/projetocidadao/projetocidadao
