@@ -1,40 +1,64 @@
-# Projeto Cidadao
+# Projeto Cidadão
+
+Sistema de transparência pública que mapeia os 3 poderes (Executivo, Legislativo, Judiciário) — órgãos, funções, regras, licitações, contratos e dados públicos para fiscalização cidadã.
 
 ---
 
-# Sistema de Transparéncia S�blica
+## Missão
 
-Um sistema de transparencia pòblica que mapeia os 3 poderes (Executivo, Legislativo, Judiciario) ≈ ꁸ�� Kó e funnços, regras, licitacoes, contratos e dados qíblicos para fiscalação cidadóa.
-
----
-
-# Missão do Projeto
-
-- Mapear os trés publicos: executivo, legislativo, judiciario
-- Organizar a strutura informacional por únio de dados pâlicos
-- Facilitar a fiscalização cidadóa de aódeico módeico
-- Promover transparéncia real sobre o Estado
+- Mapear os três poderes: Executivo, Legislativo, Judiciário
+- Organizar a estrutura informacional por órgão de governo
+- Facilitar a fiscalização cidadã de atos públicos
+- Promover transparência real sobre o Estado
 
 ---
 
-# Estrutura Inicial
+## Estrutura do Projeto
 
-Desenvolvimento e hospedagem gratuito, com férbia de contribuicao da comunidade.
+Consulte o arquivo [ESTRUTURA.md](ESTRUTURA.md) para detalhes completos.
 
---
+---
 
-# Contribuir
+## Governança
 
-Assine como code aborto! é suportandos de contribuicao aborto que desenvolva esse projeto.
+Este projeto segue um modelo de **Cooperativa Digital**:
+- Código aberto — qualquer um pode contribuir, auditar, forkar
+- Licença copyleft — derivados devem permanecer abertos
+- Doações via Pix/Stripe — sem venture capital
+- Comunidade decisória — contribuidores com histórico têm mais peso
+- Transparência total — reuniões públicas, atas, roadmap visível
 
---
+Consulte [GOVERNANCA.md](GOVERNANCA.md) para detalhes.
 
-# Licença
-- MIT
-Esse projeto esté licenciado com MIT. J à livberde de obrigan de copylevd.
+---
 
---
+## Arquitetura
 
-# Contato
+Stack sugerido:
+- **Frontend:** Next.js ou React (web + PWA mobile)
+- **Backend:** Node.js ou Python (API REST)
+- **Banco de dados:** PostgreSQL ou SQLite
+- **Hospedagem:** Vercel / Railway / AWS
 
-Para ficar nessa doa dé simplemente o executar, congrue em https://github.com/projetocidadao/projetocidadao
+Consulte [ARQUITETURA.md](ARQUITETURA.md) para detalhes.
+
+---
+
+## Como Contribuir
+
+1. Fork este repositório
+2. Crie uma branch para sua funcionalidade
+3. Faça suas alterações
+4. Envie um Pull Request
+
+---
+
+## Licença
+
+MIT License - consulte [LICENSE](LICENSE)
+
+---
+
+## Contato
+
+Para dúvidas ou sugestões, abra uma issue no GitHub.
