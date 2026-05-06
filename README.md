@@ -1,5 +1,7 @@
 # Projeto Cidadão
 
+     “Todo o poder emana do povo”
+
 > "Qualquer cidadão é parte legítima para propor ação popular que vise a anulação de ato lesivo ao patrimônio público ou de entidade de que participe o Estado, à moralidade administrativa, ao meio ambiente e ao patrimônio histórico e cultural, ficam ressalvadas, nas hipóteses previstas nesta Constituição, as ações de natureza exclusivamente privada."
 > — **Art. 5º, inciso LXXIII** da Constituição Federal de 1988
 
