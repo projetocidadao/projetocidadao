@@ -1,5 +1,10 @@
 # Projeto Cidadão
 
+> "Qualquer cidadão é parte legítima para propor ação popular que vise a anulação de ato lesivo ao patrimônio público ou de entidade de que participe o Estado, à moralidade administrativa, ao meio ambiente e ao patrimônio histórico e cultural, ficam ressalvadas, nas hipóteses previstas nesta Constituição, as ações de natureza exclusivamente privada."
+> — **Art. 5º, inciso LXXIII** da Constituição Federal de 1988
+
+---
+
 Sistema de transparência pública que mapeia os 3 poderes (Executivo, Legislativo, Judiciário) — órgãos, funções, regras, licitações, contratos e dados públicos para fiscalização cidadã.
 
 ---
@@ -54,6 +59,7 @@ Consulte [ARQUITETURA.md](ARQUITETURA.md) para detalhes.
 ---
 
 ## Licença
+
 
 MIT License - consulte [LICENSE](LICENSE)
 
