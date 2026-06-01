@@ -1,4 +1,5 @@
 # Projeto Cidadão
+ "Todo poder emana do povo para o povo" 
 
 Sistema brasileiro de transparência pública que mapeia os 3 poderes (Executivo, Legislativo, Judiciário).
 
