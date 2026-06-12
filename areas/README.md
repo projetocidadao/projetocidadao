@@ -1,4 +1,4 @@
-# 🏥 Áreas Temáticas
+# 🏛️ Áreas Temáticas
 
 A fiscalização dos 3 poderes fica mais concreta quando olhada por **área da vida pública**. Cada área aqui cruza o que os poderes fazem (Executivo, Legislativo, Judiciário) com o impacto direto no cotidiano do cidadão.
 
@@ -10,6 +10,10 @@ A fiscalização dos 3 poderes fica mais concreta quando olhada por **área da v
 - 🛡️ [Segurança](./seguranca.md) — polícias, sistema prisional, estatísticas criminais
 - 💧 [Saneamento](./saneamento.md) — água, esgoto, resíduos, drenagem
 - 💰 [Finanças](./financas.md) — orçamento público, LOA, LDO, execução, tributação
+- 🍎 [Alimentação](./alimentacao.md) — segurança alimentar, PNAE, PAA, desnutrição
+  - 📊 [Balanço da Desnutrição](./alimentacao-balanco-desnutricao.md) — acompanhamento evolutivo
+- 🌱 [Meio Ambiente](./meio-ambiente.md) — licenciamento, desmatamento, recursos hídricos
+- 🎭 [Cultura](./cultura.md) — patrimônio, Lei Aldir Blanc, PNAB, diversidade
 
 ## Como cada área é organizada
 
@@ -32,6 +36,9 @@ Cada documento segue a mesma estrutura, para facilitar a consulta:
 
 > *"A segurança pública, dever do Estado, direito e responsabilidade de todos, é exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio..."*
 > — **Art. 144** da Constituição Federal
+
+> *"Todos têm direito ao meio ambiente ecologicamente equilibrado, bem de uso comum do povo e essencial à sadia qualidade de vida, impondo-se ao poder público e à coletividade o dever de defendê-lo e preservá-lo para as presentes e futuras gerações."*
+> — **Art. 225** da Constituição Federal
 
 ---
 
