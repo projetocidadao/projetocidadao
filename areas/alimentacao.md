@@ -28,7 +28,7 @@ A área de alimentação engloba **segurança alimentar e nutricional**, **comba
 - **CPI da Fome** e outras investigações
 - **Audiências públicas** para orçamento da área
 
-### ⚖️ Judiciary
+### ⚖️ Judiciário
 - **STJ e STF** — teses sobre direito à alimentação (Art. 6º da CF/88)
 - **Justiça Federal e Estadual** — ações individuais e coletivas
 - **Ministério Público** — ACPs contra omissão estatal
@@ -88,7 +88,7 @@ A área de alimentação engloba **segurança alimentar e nutricional**, **comba
 
 Como a implantação do Projeto Cidadão tem como uma de suas missões acompanhar políticas públicas, **a área de alimentação precisa de um balanço longitudinal da desnutrição**, que mostre a linha de base ANTES do projeto e sua evolução ao longo dos anos.
 
-📄 Veja: **[areas/alimentacao-balanço-desnutricao.md](./alimentacao-balanço-desnutricao.md)** — documento dedicado ao acompanhamento evolutivo dos indicadores de desnutrição.
+📄 Veja: **[areas/alimentacao-balanco-desnutricao.md](./alimentacao-balanco-desnutricao.md)** — documento dedicado ao acompanhamento evolutivo dos indicadores de desnutrição.
 
 ---
 
