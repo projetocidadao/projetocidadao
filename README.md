@@ -29,7 +29,10 @@ Em outras palavras: **transparência é direito fundamental, e fiscalizar é dev
 | 🏗️ [ARQUITETURA.md](ARQUITETURA.md) | Stack técnico (frontend, backend, banco, hospedagem) e APIs de integração |
 | ⚖️ [GOVERNANCA.md](GOVERNANCA.md) | Modelo de cooperativa digital, copyleft, financiamento coletivo, tomada de decisão |
 | 🎓 [CURSOS_GOVERNANCA.md](CURSOS_GOVERNANCA.md) | Sistema de cursos colaborativos: incubação por IA, regra das 3 aprovações, pontos pioneiros |
-| 🏥 [areas/README.md](areas/README.md) | Áreas temáticas da vida pública: saúde, educação, transporte, segurança, saneamento, finanças |
+| 🏛️ [areas/README.md](areas/README.md) | Áreas temáticas da vida pública: saúde, educação, transporte, segurança, saneamento, finanças, alimentação, meio ambiente, cultura |
+| 📚 [cursos/README.md](cursos/README.md) | Módulo educacional: cursos colaborativos sobre fiscalização e transparência |
+| 📢 [DENUNCIAS.md](DENUNCIAS.md) | Canal de denúncias (cidadãos e servidores) e fluxo de apuração |
+| 🐕 [FAREJADOR.md](FAREJADOR.md) | Farejador de Corrupção: varredura automatizada de dados públicos com IA |
 
 ---
 
@@ -59,8 +62,21 @@ A fiscalização não vive só de poder — vive de **tema**. Por isso organizam
 - 🛡️ [Segurança](areas/seguranca.md) — polícias, sistema prisional, estatísticas
 - 💧 [Saneamento](areas/saneamento.md) — água, esgoto, resíduos
 - 💰 [Finanças](areas/financas.md) — orçamento público, LOA, LDO, execução
+- 🍎 [Alimentação](areas/alimentacao.md) — segurança alimentar, PNAE, PAA
+  - 📊 [Balanço da Desnutrição](areas/alimentacao-balanco-desnutricao.md) — acompanhamento evolutivo
+- 🌱 [Meio Ambiente](areas/meio-ambiente.md) — licenciamento, desmatamento, recursos hídricos
+- 🎭 [Cultura](areas/cultura.md) — patrimônio, Lei Aldir Blanc, diversidade
 
 → Veja detalhes e fontes em [areas/README.md](areas/README.md)
+
+---
+
+## 📢 Denúncias & Farejador de Corrupção
+
+O projeto inclui **dois mecanismos complementares** para combate à corrupção:
+
+- **📢 [Canal de Denúncias](DENUNCIAS.md)** — qualquer cidadão (comum ou servidor público) pode registrar uma denúncia, com proteção de identidade e fluxo de apuração
+- **🐕 [Farejador de Corrupção](FAREJADOR.md)** — varredura automatizada com IA sobre dados públicos, identificando padrões suspeitos em licitações, contratos, folha de pagamento e declarações de bens
 
 ---
 
@@ -71,7 +87,7 @@ A fiscalização não vive só de poder — vive de **tema**. Por isso organizam
 | [Portal da Transparência](https://portaldatransparencia.gov.br/) | Repasses, programas sociais, servidores |
 | [Compras Governamentais](https://www.gov.br/compras/) | Licitações, contratos, atas |
 | [Câmara dos Deputados](https://www.camara.leg.br/) | Proposições, votações, deputados |
-| [Senado Federal](https://www12.senado.leg.br/) | Projetos de lei, senadores |
+| [Senado Federal](https://www12.senado.leg.gov.br/) | Projetos de lei, senadores |
 | [CNJ / PJe](https://www.cnj.jus.br/) | Processos judiciais |
 | [Dados Abertos Brasil](https://dados.gov.br/) | Catálogo geral de dados públicos |
 
