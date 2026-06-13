@@ -29,7 +29,7 @@ Em outras palavras: **transparência é direito fundamental, e fiscalizar é dev
 | 🏗️ [ARQUITETURA.md](ARQUITETURA.md) | Stack técnico (frontend, backend, banco, hospedagem) e APIs de integração |
 | ⚖️ [GOVERNANCA.md](GOVERNANCA.md) | Modelo de cooperativa digital, copyleft, financiamento coletivo, tomada de decisão |
 | 🎓 [CURSOS_GOVERNANCA.md](CURSOS_GOVERNANCA.md) | Sistema de cursos colaborativos: incubação por IA, regra das 3 aprovações, pontos pioneiros |
-| 🏛️ [areas/README.md](areas/README.md) | Áreas temáticas da vida pública: saúde, educação, transporte, segurança, saneamento, finanças, alimentação, meio ambiente, cultura |
+| 🏛️ [areas/README.md](areas/README.md) | Áreas temáticas da vida pública: saúde, educação, transporte, segurança, saneamento, finanças, alimentação |
 | 📚 [cursos/README.md](cursos/README.md) | Módulo educacional: cursos colaborativos sobre fiscalização e transparência |
 | 📢 [DENUNCIAS.md](DENUNCIAS.md) | Canal de denúncias (cidadãos e servidores) e fluxo de apuração |
 | 🐕 [FAREJADOR.md](FAREJADOR.md) | Farejador de Corrupção: varredura automatizada de dados públicos com IA |
@@ -56,16 +56,13 @@ Tribunais, magistrados, processos, decisões, Ministério Público, sistema pris
 
 A fiscalização não vive só de poder — vive de **tema**. Por isso organizamos também por área da vida pública:
 
-- 🏥 [Saúde](areas/saude.md) — SUS, hospitais, verbas, filas, programas
+- 🏥 [Saúde](areas/saude.md) — SUS, hospitais, verbas, programas, filas
 - 🎓 [Educação](areas/educacao.md) — escolas, FUNDEB, merenda, transporte escolar
+- 🍽️ [Alimentação](areas/alimentacao.md) — segurança alimentar, desnutrição, merenda, agricultura familiar
 - 🚌 [Transporte](areas/transporte.md) — mobilidade urbana, obras, concessões
 - 🛡️ [Segurança](areas/seguranca.md) — polícias, sistema prisional, estatísticas
 - 💧 [Saneamento](areas/saneamento.md) — água, esgoto, resíduos
 - 💰 [Finanças](areas/financas.md) — orçamento público, LOA, LDO, execução
-- 🍎 [Alimentação](areas/alimentacao.md) — segurança alimentar, PNAE, PAA
-  - 📊 [Balanço da Desnutrição](areas/alimentacao-balanco-desnutricao.md) — acompanhamento evolutivo
-- 🌱 [Meio Ambiente](areas/meio-ambiente.md) — licenciamento, desmatamento, recursos hídricos
-- 🎭 [Cultura](areas/cultura.md) — patrimônio, Lei Aldir Blanc, diversidade
 
 → Veja detalhes e fontes em [areas/README.md](areas/README.md)
 
@@ -87,7 +84,7 @@ O projeto inclui **dois mecanismos complementares** para combate à corrupção:
 | [Portal da Transparência](https://portaldatransparencia.gov.br/) | Repasses, programas sociais, servidores |
 | [Compras Governamentais](https://www.gov.br/compras/) | Licitações, contratos, atas |
 | [Câmara dos Deputados](https://www.camara.leg.br/) | Proposições, votações, deputados |
-| [Senado Federal](https://www12.senado.leg.gov.br/) | Projetos de lei, senadores |
+| [Senado Federal](https://www12.senado.leg.br/) | Projetos de lei, senadores |
 | [CNJ / PJe](https://www.cnj.jus.br/) | Processos judiciais |
 | [Dados Abertos Brasil](https://dados.gov.br/) | Catálogo geral de dados públicos |
 
