@@ -1,4 +1,4 @@
-# 🏛️ Áreas Temáticas
+# 🏥 Áreas Temáticas
 
 A fiscalização dos 3 poderes fica mais concreta quando olhada por **área da vida pública**. Cada área aqui cruza o que os poderes fazem (Executivo, Legislativo, Judiciário) com o impacto direto no cotidiano do cidadão.
 
@@ -6,14 +6,11 @@ A fiscalização dos 3 poderes fica mais concreta quando olhada por **área da v
 
 - 🏥 [Saúde](./saude.md) — SUS, hospitais, verbas, programas, filas
 - 🎓 [Educação](./educacao.md) — escolas, FUNDEB, merenda, transporte escolar, EAD
+- 🍽️ [Alimentação](./alimentacao.md) — segurança alimentar, desnutrição, merenda, agricultura familiar
 - 🚌 [Transporte](./transporte.md) — mobilidade urbana, obras viárias, concessões, multas
 - 🛡️ [Segurança](./seguranca.md) — polícias, sistema prisional, estatísticas criminais
 - 💧 [Saneamento](./saneamento.md) — água, esgoto, resíduos, drenagem
 - 💰 [Finanças](./financas.md) — orçamento público, LOA, LDO, execução, tributação
-- 🍎 [Alimentação](./alimentacao.md) — segurança alimentar, PNAE, PAA, desnutrição
-  - 📊 [Balanço da Desnutrição](./alimentacao-balanco-desnutricao.md) — acompanhamento evolutivo
-- 🌱 [Meio Ambiente](./meio-ambiente.md) — licenciamento, desmatamento, recursos hídricos
-- 🎭 [Cultura](./cultura.md) — patrimônio, Lei Aldir Blanc, PNAB, diversidade
 
 ## Como cada área é organizada
 
@@ -34,11 +31,11 @@ Cada documento segue a mesma estrutura, para facilitar a consulta:
 > *"A educação, direito de todos e dever do Estado e da família, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho."*
 > — **Art. 205** da Constituição Federal
 
+> *"A alimentação é direito fundamental do ser humano, indispensável à realização dos direitos consagrados na Constituição Federal."*
+> — **Art. 1º da Lei 11.346/2006** (LOSAN)
+
 > *"A segurança pública, dever do Estado, direito e responsabilidade de todos, é exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio..."*
 > — **Art. 144** da Constituição Federal
-
-> *"Todos têm direito ao meio ambiente ecologicamente equilibrado, bem de uso comum do povo e essencial à sadia qualidade de vida, impondo-se ao poder público e à coletividade o dever de defendê-lo e preservá-lo para as presentes e futuras gerações."*
-> — **Art. 225** da Constituição Federal
 
 ---
 
