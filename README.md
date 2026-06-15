@@ -1,125 +1,138 @@
 # 🏛️ Projeto Cidadão
 
-> *"Todo poder emana do povo, para o povo."*
-> — Art. 1º, parágrafo único, Constituição Federal de 1988
+> Plataforma colaborativa de transparência pública, fiscalização cidadã e educação para a participação social.
 
-**Sistema brasileiro de transparência pública** que mapeia e fiscaliza os 3 poderes (Executivo, Legislativo, Judiciário) e suas ações em todas as áreas da vida pública.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Status: Em Construção](https://img.shields.io/badge/Status-Em%20Construção-yellow.svg)](#)
 
-Construído como uma **cooperativa digital de código aberto** — sem investidores, sem fins lucrativos, com governança comunitária.
+## Sobre o Projeto
 
----
+O **Projeto Cidadão** é uma iniciativa open source que visa aproximar o cidadão do poder público, fornecendo ferramentas para **fiscalizar**, **denunciar**, **aprender** e **participar** da vida pública.
 
-## 📜 Fundamento Constitucional
+Acreditamos que a transparência é o antídoto contra a corrupção — e que o cidadão é o principal agente dessa transformação.
 
-O projeto se apoia em dois pilares da **Constituição Federal de 1988**:
-
-> **Art. 5º, XIV** — *"É assegurado a todos o acesso à informação e protegido o direito à intimidade, à vida privada, à honra e à imagem das pessoas."* (Incluído pela EC nº 115/2022)
-
-> **Art. 5º, LXXIII** — *"Qualquer cidadão é parte legítima para propor ação popular que vise a anulação de ato lesivo ao patrimônio público, à moralidade administrativa, ao meio ambiente e ao patrimônio histórico e cultural."* (Ação Popular)
-
-Em outras palavras: **transparência é direito fundamental, e fiscalizar é dever cívico.**
-
----
-
-## 🗂️ Documentos do Projeto
-
-| Documento | O que tem dentro |
-|-----------|------------------|
-| 📐 [ESTRUTURA.md](ESTRUTURA.md) | Mapeamento completo dos 3 poderes, órgãos, dados públicos e pontos de fiscalização |
-| 🏗️ [ARQUITETURA.md](ARQUITETURA.md) | Stack técnico (frontend, backend, banco, hospedagem) e APIs de integração |
-| ⚖️ [GOVERNANCA.md](GOVERNANCA.md) | Modelo de cooperativa digital, copyleft, financiamento coletivo, tomada de decisão |
-| 🎓 [CURSOS_GOVERNANCA.md](CURSOS_GOVERNANCA.md) | Sistema de cursos colaborativos: incubação por IA, regra das 3 aprovações, pontos pioneiros |
-| 🏛️ [areas/README.md](areas/README.md) | Áreas temáticas da vida pública: saúde, educação, transporte, segurança, saneamento, finanças, alimentação |
-| 📚 [cursos/README.md](cursos/README.md) | Módulo educacional: cursos colaborativos sobre fiscalização e transparência |
-| 📢 [DENUNCIAS.md](DENUNCIAS.md) | Canal de denúncias (cidadãos e servidores) e fluxo de apuração |
-| 🐕 [FAREJADOR.md](FAREJADOR.md) | Farejador de Corrupção: varredura automatizada de dados públicos com IA |
-
----
-
-## 🏛️ Os 3 Poderes
-
-### ⚡ Executivo
-Políticas públicas, gastos, programas sociais, licitações, contratos, servidores.
-→ Detalhes em [ESTRUTURA.md → Executivo](ESTRUTURA.md#11-executivo)
-
-### 📜 Legislativo
-Deputados, senadores, vereadores, proposições, votações, leis, orçamento.
-→ Detalhes em [ESTRUTURA.md → Legislativo](ESTRUTURA.md#12-legislativo)
-
-### ⚖️ Judiciário
-Tribunais, magistrados, processos, decisões, Ministério Público, sistema prisional.
-→ Detalhes em [ESTRUTURA.md → Judiciário](ESTRUTURA.md#13-judici%C3%A1rio)
-
----
-
-## 🏥 Áreas Temáticas
-
-A fiscalização não vive só de poder — vive de **tema**. Por isso organizamos também por área da vida pública:
-
-- 🏥 [Saúde](areas/saude.md) — SUS, hospitais, verbas, programas, filas
-- 🎓 [Educação](areas/educacao.md) — escolas, FUNDEB, merenda, transporte escolar
-- 🍽️ [Alimentação](areas/alimentacao.md) — segurança alimentar, desnutrição, merenda, agricultura familiar
-- 🚌 [Transporte](areas/transporte.md) — mobilidade urbana, obras, concessões
-- 🛡️ [Segurança](areas/seguranca.md) — polícias, sistema prisional, estatísticas
-- 💧 [Saneamento](areas/saneamento.md) — água, esgoto, resíduos
-- 💰 [Finanças](areas/financas.md) — orçamento público, LOA, LDO, execução
-
-→ Veja detalhes e fontes em [areas/README.md](areas/README.md)
-
----
-
-## 📢 Denúncias & Farejador de Corrupção
-
-O projeto inclui **dois mecanismos complementares** para combate à corrupção:
-
-- **📢 [Canal de Denúncias](DENUNCIAS.md)** — qualquer cidadão (comum ou servidor público) pode registrar uma denúncia, com proteção de identidade e fluxo de apuração
-- **🐕 [Farejador de Corrupção](FAREJADOR.md)** — varredura automatizada com IA sobre dados públicos, identificando padrões suspeitos em licitações, contratos, folha de pagamento e declarações de bens
-
----
-
-## 🔌 Fontes de Dados Integradas
-
-| Fonte | Dados |
-|-------|-------|
-| [Portal da Transparência](https://portaldatransparencia.gov.br/) | Repasses, programas sociais, servidores |
-| [Compras Governamentais](https://www.gov.br/compras/) | Licitações, contratos, atas |
-| [Câmara dos Deputados](https://www.camara.leg.br/) | Proposições, votações, deputados |
-| [Senado Federal](https://www12.senado.leg.br/) | Projetos de lei, senadores |
-| [CNJ / PJe](https://www.cnj.jus.br/) | Processos judiciais |
-| [Dados Abertos Brasil](https://dados.gov.br/) | Catálogo geral de dados públicos |
-
----
-
-## 💻 Stack Técnico
+## Estrutura do Repositório
 
 ```
-/backend          # API Python (FastAPI)
-/mobile           # App React Native
-/integracoes/     # Módulos de integração com fontes públicas
+projetocidadao/
+├── README.md                       # Este arquivo
+├── LICENSE                         # Licença MIT
+├── CONTRIBUTING.md                 # Como contribuir
+├── CODE_OF_CONDUCT.md              # Código de conduta
+│
+├── areas/                          # Áreas temáticas
+│   ├── README.md                   # Índice de áreas
+│   ├── saude.md
+│   ├── educacao.md
+│   ├── alimentacao.md
+│   ├── transporte.md
+│   ├── seguranca.md
+│   ├── saneamento.md
+│   ├── financas.md
+│   ├── meio-ambiente.md
+│   └── cultura.md
+│
+├── cursos/                         # Cursos educacionais
+│   ├── README.md                   # Índice de cursos
+│   ├── orgaos-publicos.md
+│   ├── direito-constitucional.md
+│   ├── fiscalizacao-cidada.md
+│   ├── licitacoes-contratos.md
+│   ├── dados-abertos.md
+│   ├── tecnologia-transparencia.md
+│   ├── meio-ambiente.md
+│   └── cultura.md
+│
+├── docs/                           # Documentação técnica
+│   ├── GOVERNANCA.md               # Modelo de governança
+│   ├── CURSOS_GOVERNANCA.md        # Governança dos cursos
+│   ├── denuncias.md                # Feature de denúncias
+│   ├── farejador-corrupcao.md      # Farejador de corrupção
+│   ├── api.md                      # Documentação da API
+│   └── LGPD.md                     # Conformidade com a LGPD
+│
+├── backend/                        # API REST
+│   ├── README.md                   # Stack e modelo de dados
+│   ├── src/
+│   ├── prisma/
+│   ├── tests/
+│   ├── docker-compose.yml
+│   └── Dockerfile
+│
+└── mobile/                         # App mobile
+    ├── README.md                   # Stack e telas
+    ├── src/
+    ├── app.json
+    └── eas.json
 ```
 
-Frontend: **Next.js / React + TypeScript + Tailwind** • Banco: **PostgreSQL** • Deploy: **Vercel + Railway/AWS**
-→ Detalhes em [ARQUITETURA.md](ARQUITETURA.md)
+## Áreas Temáticas
+
+O projeto cobre **9 áreas temáticas** com cursos, denúncias, dados públicos e dashboards:
+
+- 🏥 [Saúde](./areas/saude.md)
+- 🎓 [Educação](./areas/educacao.md)
+- 🍞 [Alimentação](./areas/alimentacao.md)
+- 🚗 [Transporte](./areas/transporte.md)
+- 👮 [Segurança](./areas/seguranca.md)
+- 💧 [Saneamento](./areas/saneamento.md)
+- 💰 [Finanças](./areas/financas.md)
+- 🌱 [Meio Ambiente](./areas/meio-ambiente.md)
+- 🎭 [Cultura](./areas/cultura.md)
+
+## Cursos
+
+**8 cursos** sobre transparência, fiscalização e direitos do cidadão:
+
+- 🏛️ [Órgãos Públicos](./cursos/orgaos-publicos.md)
+- ⚖️ [Direito Constitucional](./cursos/direito-constitucional.md)
+- 🛡️ [Fiscalização Cidadã](./cursos/fiscalizacao-cidada.md)
+- 📜 [Licitações e Contratos](./cursos/licitacoes-contratos.md)
+- 📊 [Dados Abertos](./cursos/dados-abertos.md)
+- 💻 [Tecnologia e Transparência](./cursos/tecnologia-transparencia.md)
+- 🌱 [Meio Ambiente](./cursos/meio-ambiente.md)
+- 🎭 [Cultura](./cursos/cultura.md)
+
+## Features
+
+- 📢 **Denúncias Cidadãs** — envie e acompanhe denúncias com foto, vídeo e geolocalização
+- 🕵️ **Farejador de Corrupção** — sistema automatizado que monitora dados públicos em busca de padrões suspeitos
+- 🗺️ **Mapa Interativo** — visualize denúncias e áreas críticas
+- 📊 **Dashboards** — gastos públicos em tempo real
+- 🎓 **Cursos** — educação para a cidadania
+- 🏆 **Sistema de Pontos** — gamificação para incentivar a participação
+- 🔒 **LGPD** — conformidade com a Lei Geral de Proteção de Dados
+
+## Tecnologias
+
+- **Backend:** Node.js + TypeScript + Express + Prisma + PostgreSQL
+- **Mobile:** React Native + Expo + TypeScript
+- **IA/ML:** Python (Farejador de Corrupção)
+- **Infra:** Docker + Docker Compose
+- **CI/CD:** GitHub Actions
+
+## Como Contribuir
+
+Quer ajudar? Veja [CONTRIBUTING.md](./CONTRIBUTING.md) e [GOVERNANÇA](./docs/GOVERNANCA.md) para entender o modelo de governança colaborativa.
+
+```bash
+# 1. Fork o repositório
+# 2. Crie uma branch (git checkout -b feature/minha-contribuicao)
+# 3. Faça commit (git commit -m 'feat: minha contribuição')
+# 4. Push (git push origin feature/minha-contribuicao)
+# 5. Abra um Pull Request
+```
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](./LICENSE).
+
+## Contato
+
+- **Repositório:** [github.com/projetocidadao/projetocidadao](https://github.com/projetocidadao/projetocidadao)
+- **Issues:** [github.com/projetocidadao/projetocidadao/issues](https://github.com/projetocidadao/projetocidadao/issues)
+- **Discussões:** [github.com/projetocidadao/projetocidadao/discussions](https://github.com/projetocidadao/projetocidadao/discussions)
 
 ---
 
-## 🤝 Como Contribuir
-
-1. **Fork** este repositório
-2. Crie uma **branch** para sua feature (`git checkout -b feature/minha-contribuicao`)
-3. Faça suas alterações e **commit** (`git commit -m 'feat: adiciona...'`)
-4. Envie um **Pull Request**
-
-Quer criar **cursos** sobre fiscalização? Leia [CURSOS_GOVERNANCA.md](CURSOS_GOVERNANCA.md) — a comunidade te acolhe depois do período de incubação.
-
-Tem dúvida sobre **como decisões são tomadas**? Comece por [GOVERNANCA.md](GOVERNANCA.md).
-
----
-
-## 📜 Licença
-
-**MIT License** — Projeto aberto para todos os cidadãos brasileiros.
-
----
-
-*"A transparência é o antídoto contra a corrupção."* — Projeto Cidadão 🇧🇷
+📌 *Todo poder emana do povo, para o povo. A transparência é o caminho, a fiscalização é o meio, a cidadania é o destino.*
