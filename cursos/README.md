@@ -16,6 +16,10 @@ Módulo educacional do Projeto Cidadão — cursos colaborativos sobre transpar�
 - 📊 [Dados Abertos](./dados-abertos.md) — Como usar portais de transparência
 - 💻 [Tecnologia e Transparência](./tecnologia-transparencia.md) — Ferramentas digitais para o controle social
 
+### 3. Temas Especiais
+- 🌱 [Meio Ambiente](./meio-ambiente.md) — Licenciamento, desmatamento, recursos hídricos
+- 🎭 [Cultura](./cultura.md) — Patrimônio, Lei Aldir Blanc, diversidade cultural
+
 ## Como cada curso é estruturado
 
 Cada curso segue o mesmo template, para facilitar a consulta e a curadoria:
