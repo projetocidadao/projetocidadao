@@ -1,42 +1,44 @@
-# 🏥 Áreas Temáticas
+# 🏘️ Áreas Temáticas
 
-A fiscalização dos 3 poderes fica mais concreta quando olhada por **área da vida pública**. Cada área aqui cruza o que os poderes fazem (Executivo, Legislativo, Judiciário) com o impacto direto no cotidiano do cidadão.
+O Projeto Cidadão acompanha políticas públicas, indicadores e fontes de dados em áreas estratégicas da vida pública brasileira.
 
-## Índice
+Cada área segue o mesmo template:
 
-- 🏥 [Saúde](./saude.md) — SUS, hospitais, verbas, programas, filas
-- 🎓 [Educação](./educacao.md) — escolas, FUNDEB, merenda, transporte escolar, EAD
-- 🍽️ [Alimentação](./alimentacao.md) — segurança alimentar, desnutrição, merenda, agricultura familiar
-- 🚌 [Transporte](./transporte.md) — mobilidade urbana, obras viárias, concessões, multas
-- 🛡️ [Segurança](./seguranca.md) — polícias, sistema prisional, estatísticas criminais
-- 💧 [Saneamento](./saneamento.md) — água, esgoto, resíduos, drenagem
-- 💰 [Finanças](./financas.md) — orçamento público, LOA, LDO, execução, tributação
+1. **Visão Geral** — contexto constitucional e importância
+2. **Temas** — subtemas e políticas públicas relacionadas
+3. **Indicadores** — dados acompanhados periodicamente
+4. **Fontes Oficiais** — portais, bases de dados, órgãos
+5. **O que você pode fazer** — ações de fiscalização e participação
+6. **Princípios** — valores que guiam a atuação
 
-## Como cada área é organizada
+## Índice de Áreas
 
-Cada documento segue a mesma estrutura, para facilitar a consulta:
+### Áreas Sociais
+- 🏥 [Saúde](./saude.md) — SUS, programas, dados epidemiológicos
+- 📚 [Educação](./educacao.md) — MEC, IDEB, financiamento
+- 🍽️ [Alimentação](./alimentacao.md) — desnutrição, segurança alimentar, fome
 
-1. **Visão Geral** — o que essa área engloba
-2. **Atribuições por Poder** — o que cada poder faz nessa área
-3. **Dados Públicos Essenciais** — o que precisa estar disponível
-4. **Fontes Oficiais** — onde buscar
-5. **Pontos de Fiscalização Cidadã** — como o cidadão pode verificar
-6. **Indicadores-Chave** — números que merecem acompanhamento
+### Áreas de Infraestrutura
+- 🚌 [Transporte](./transporte.md) — DNIT, ANTT, mobilidade urbana
+- 💧 [Saneamento](./saneamento.md) — ANA, água, esgoto, resíduos
 
-## Princípio Constitucional
+### Áreas de Segurança
+- 🛡️ [Segurança Pública](./seguranca.md) — polícias, violência, sistema prisional
 
-> *"A saúde é direito de todos e dever do Estado, garantido mediante políticas sociais e econômicas que visem à redução do risco de doença e de outros agravos e ao acesso universal e igualitário às ações e serviços para sua promoção, proteção e recuperação."*
-> — **Art. 196** da Constituição Federal
+### Áreas de Recursos
+- 💰 [Finanças Públicas](./financas.md) — orçamento, gastos, dívida
 
-> *"A educação, direito de todos e dever do Estado e da família, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho."*
-> — **Art. 205** da Constituição Federal
+### Áreas Transversais
+- 🌱 [Meio Ambiente](./meio-ambiente.md) — desmatamento, queimadas, biodiversidade
+- 🎭 [Cultura](./cultura.md) — Lei Rouanet, patrimônio, diversidade
 
-> *"A alimentação é direito fundamental do ser humano, indispensável à realização dos direitos consagrados na Constituição Federal."*
-> — **Art. 1º da Lei 11.346/2006** (LOSAN)
+## Princípios Constitucionais que orientam todas as áreas
 
-> *"A segurança pública, dever do Estado, direito e responsabilidade de todos, é exercida para a preservação da ordem pública e da incolumidade das pessoas e do patrimônio..."*
-> — **Art. 144** da Constituição Federal
+- **Art. 1º** — Soberania, cidadania, dignidade da pessoa humana
+- **Art. 3º** — Construir uma sociedade livre, justa e solidária
+- **Art. 5º** — Direitos e garantias fundamentais
+- **Art. 6º** — Direitos sociais (saúde, educação, alimentação, trabalho, moradia, transporte, lazer, segurança)
+- **Art. 37** — Princípios da Administração Pública (legalidade, impessoalidade, moralidade, publicidade, eficiência)
+- **Art. 225** — Direito ao meio ambiente equilibrado
 
----
-
-📌 *Cada área é um documento vivo — contribuições são bem-vindas via Pull Request.*
+📌 *Acompanhar o Estado é direito de todos. As áreas temáticas são o ponto de partida para a fiscalização cidadã.*
