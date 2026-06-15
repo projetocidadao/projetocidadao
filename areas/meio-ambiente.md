@@ -1,87 +1,87 @@
-# 🌱 Meio Ambiente
+# 🌱 Área Temática: Meio Ambiente
 
-> *"Todos têm direito ao meio ambiente ecologicamente equilibrado, bem de uso comum do povo e essencial à sadia qualidade de vida."* — Art. 225, CF/88
+> *"Todos têm direito ao meio ambiente ecologicamente equilibrado, bem de uso comum do povo e essencial à sadia qualidade de vida."*
+> — Art. 225, Constituição Federal de 1988
 
-## 📊 Visão Geral
+## 1. Visão Geral
 
-Esta área acompanha as políticas públicas ambientais e os principais indicadores de qualidade ambiental, desmatamento, recursos hídricos e biodiversidade no Brasil.
+A área de **Meio Ambiente** do Projeto Cidadão acompanha políticas públicas ambientais, monitora desmatamento e queimadas, fiscaliza licenciamento ambiental e promove a participação cidadã em questões ambientais.
 
-## 🎯 Temas
+## 2. Principais Tópicos
 
-### 1. Desmatamento
-- PRODES (INPE) — taxa anual de desmatamento na Amazônia Legal
-- DETER (INPE) — alertas em tempo real
-- PPCDAm — Plano de Ação para Prevenção e Controle do Desmatamento
-- Biomas: Amazônia, Cerrado, Mata Atlântica, Caatinga, Pampa, Pantanal
+### 2.1. Desmatamento e Queimadas
+- **Amazônia** — monitoramento via PRODES e DETER (INPE)
+- **Cerrado** — monitoramento de desmatamento
+- **Mata Atlântica** — monitoramento de fragmentos
+- **Pantanal** — monitoramento de queimadas
+- **Caatinga** — desertificação
+- **Pampa** — monitoramento ambiental
 
-### 2. Queimadas
-- Queimadas (INPE) — focos de incêndio ativos
-- INPE / BDQueimadas — banco de dados de queimadas
-- Prevenção e combate — brigadas, fiscalização
+### 2.2. Licenciamento Ambiental
+- **Licença Prévia (LP)** — fase de planejamento
+- **Licença de Instalação (LI)** — fase de construção
+- **Licença de Operação (LO)** — fase de operação
+- **Órgãos licenciadores** — IBAMA, ICMBio, estaduais
+- **Estudo de Impacto Ambiental (EIA/RIMA)**
 
-### 3. Recursos Hídricos
-- ANA — Agência Nacional de Águas e Saneamento Básico
-- Comitês de bacias hidrográficas
-- Outorga de uso da água
-- Qualidade da água — prodes, indicadores
+### 2.3. Recursos Hídricos
+- **Política Nacional de Recursos Hídricos** (Lei 9.433/1997)
+- **ANA** — Agência Nacional de Águas
+- **Comitês de bacias** — gestão participativa
+- **Outorga** — uso da água
+- **Saneamento** — água e esgoto
 
-### 4. Biodiversidade
-- ICMBio — Instituto Chico Mendes de Conservação da Biodiversidade
-- Unidades de Conservação (federais, estaduais, municipais)
-- Espécies ameaçadas — lista oficial
-- Tráfico de animais — combate e prevenção
+### 2.4. Crimes Ambientais
+- **Lei 9.605/1998** — Lei de Crimes Ambientais
+- **Tipos de crimes** — desmatamento, poluição, caça, pesca
+- **Penas** — detenção, multa, prestação de serviços
+- **Fiscalização** — IBAMA, ICMBio, polícias ambientais
 
-### 5. Saneamento e Poluição
-- ANA — panorama do saneamento
-- Cetesb — qualidade do ar e água (SP)
-- IBAMA — autos de infração ambiental
-- Crimes ambientais — Lei 9.605/98
+### 2.5. Unidades de Conservação
+- **Parques** — proteção integral
+- **Reservas** — uso sustentável
+- **Áreas de proteção ambiental (APAs)**
+- **Terras indígenas** — proteção especial
 
-### 6. Licenciamento Ambiental
-- Licença Prévia (LP), Licença de Instalação (LI), Licença de Operação (LO)
-- EIA/RIMA — Estudo de Impacto Ambiental
-- Audiências públicas
-- Órgãos licenciadores (IBAMA, estaduais, municipais)
+### 2.6. Mudanças Climáticas
+- **Acordo de Paris** — compromisso brasileiro
+- **Emissões de gases de efeito estufa**
+- **Energia renovável** — solar, eólica, biomassa
+- **Transição energética** — do fóssil para o renovável
 
-## 📈 Indicadores Acompanhados
+## 3. Dados Públicos
 
-| Indicador | Fonte | Periodicidade |
-|---|---|---|
-| Taxa de desmatamento | INPE/PRODES | Anual |
-| Focos de queimada | INPE/BDQueimadas | Diária |
-| Qualidade do ar | CETESB, INEA | Diária |
-| Qualidade da água | ANA, estaduais | Mensal |
-| Autos de infração | IBAMA | Mensal |
-| Cobertura de saneamento | ANA/SNIS | Anual |
-| Áreas protegidas | ICMBio, MMA | Anual |
+- [INPE — Instituto Nacional de Pesquisas Espaciais](http://www.inpe.br/)
+- [IBAMA — Instituto Brasileiro do Meio Ambiente](https://www.gov.br/ibama/)
+- [ICMBio — Instituto Chico Mendes](https://www.gov.br/icmbio/)
+- [ANA — Agência Nacional de Águas](https://www.gov.br/ana/)
+- [MMA — Ministério do Meio Ambiente](https://www.gov.br/mma/)
+- [Portal da Transparência — Meio Ambiente](https://portaldatransparencia.gov.br/)
 
-## 🔗 Fontes Oficiais
+## 4. Como Fiscalizar
 
-- [INPE](http://www.inpe.br/) — Instituto Nacional de Pesquisas Espaciais
-- [IBAMA](https://www.gov.br/ibama/) — Instituto Brasileiro do Meio Ambiente
-- [ICMBio](https://www.gov.br/icmbio/) — Instituto Chico Mendes
-- [ANA](https://www.gov.br/ana/) — Agência Nacional de Águas
-- [MMA](https://www.gov.br/mma/) — Ministério do Meio Ambiente
-- [CETESB](https://cetesb.sp.gov.br/) — Companhia Ambiental do Estado de SP
-- [INEA](http://www.inea.rj.gov.br/) — Instituto Estadual do Ambiente (RJ)
-- [Observatório do Clima](http://www.observatoriodoclima.eco.br/)
+1. **Denuncie** desmatamento, queimadas ou crimes ambientais
+2. **Acompanhe** licenças ambientais no seu município
+3. **Monitore** dados de desmatamento em tempo real
+4. **Participe** de audiências públicas de licenciamento
+5. **Apoie** projetos de conservação e reflorestamento
 
-## 🛠️ O que você pode fazer
+## 5. Princípios
 
-- **Fiscalizar** desmatamento e queimadas em tempo real
-- **Denunciar** crimes ambientais via IBAMA ou MP
-- **Acompanhar** audiências públicas de licenciamento
-- **Apoiar** projetos de conservação e reflorestamento
-- **Educar** sua comunidade sobre direitos ambientais
+- **Transparência** — dados abertos e acessíveis
+- **Participação** — controle social efetivo
+- **Prevenção** — evitar danos ambientais
+- **Justiça ambiental** — proteger comunidades vulneráveis
+- **Sustentabilidade** — equilíbrio entre desenvolvimento e conservação
 
-## 📌 Princípios
+## 6. Ações do Projeto Cidadão
 
-- **Transparência ativa** — dados ambientais são públicos
-- **Prevenção** — melhor que remediar
-- **Justiça ambiental** — comunidades tradicionais têm prioridade
-- **Ciência** — decisões baseadas em evidências
-- **Participação** — sociedade civil nos comitês e conselhos
+- 📊 Dashboard de desmatamento em tempo real
+- 📢 Canal de denúncias ambientais
+- 🗺️ Mapa de áreas críticas
+- 📚 Cursos sobre licenciamento e fiscalização
+- 🤝 Parcerias com ONGs e movimentos ambientais
 
 ---
 
-📌 *O meio ambiente é herança. Cuidar dele é dever de todos.*
+📌 *Meio ambiente é saúde, economia e justiça social. Proteger a natureza é proteger a vida — e o futuro.*
