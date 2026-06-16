@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from src.db.config import settings
 from src.db.session import async_engine
 from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos, anexos
-from src.api import admin_farejador
+from src.api import admin_farejador, notificacoes
 
 try:
     from src.farejador.scheduler import iniciar_scheduler, parar_scheduler
@@ -57,9 +57,10 @@ app = FastAPI(
         "- Áreas temáticas (Saúde, Educação, etc.)\n"
         "- Cursos de capacitação\n"
         "- Comentários em thread\n"
-        "- Farejador de Corrupção (heurísticas + scheduler automático)"
+        "- Farejador de Corrupção (heurísticas + scheduler)\n"
+        "- Notificações in-app + Telegram + preferências"
     ),
-    version="0.4.0",
+    version="0.5.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -79,7 +80,7 @@ async def health() -> dict:
     return {
         "status": "ok",
         "service": "projeto-cidadao-api",
-        "version": "0.4.0",
+        "version": "0.5.0",
         "env": settings.app_env,
         "farejador_scheduler": FAREJADOR_DISPONIVEL,
     }
@@ -104,6 +105,7 @@ app.include_router(faros.router)
 app.include_router(votos.router)
 app.include_router(anexos.router)
 app.include_router(admin_farejador.router)
+app.include_router(notificacoes.router)
 
 
 @app.exception_handler(404)
