@@ -1,138 +1,76 @@
-# 🏛️ Projeto Cidadão
+# 🇧🇷 Projeto Cidadão
 
-> Plataforma colaborativa de transparência pública, fiscalização cidadã e educação para a participação social.
+> Plataforma de transparência pública, fiscalização cidadã e educação para o controle social.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Status: Em Construção](https://img.shields.io/badge/Status-Em%20Construção-yellow.svg)](#)
+[![GitHub](https://img.shields.io/badge/repo-projetocidadao%2Fprojetocidadao-blue)](https://github.com/projetocidadao/projetocidadao)
 
-## Sobre o Projeto
-
-O **Projeto Cidadão** é uma iniciativa open source que visa aproximar o cidadão do poder público, fornecendo ferramentas para **fiscalizar**, **denunciar**, **aprender** e **participar** da vida pública.
-
-Acreditamos que a transparência é o antídoto contra a corrupção — e que o cidadão é o principal agente dessa transformação.
-
-## Estrutura do Repositório
+## 🏗️ Estrutura
 
 ```
 projetocidadao/
-├── README.md                       # Este arquivo
-├── LICENSE                         # Licença MIT
-├── CONTRIBUTING.md                 # Como contribuir
-├── CODE_OF_CONDUCT.md              # Código de conduta
-│
-├── areas/                          # Áreas temáticas
-│   ├── README.md                   # Índice de áreas
-│   ├── saude.md
-│   ├── educacao.md
-│   ├── alimentacao.md
-│   ├── transporte.md
-│   ├── seguranca.md
-│   ├── saneamento.md
-│   ├── financas.md
-│   ├── meio-ambiente.md
-│   └── cultura.md
-│
-├── cursos/                         # Cursos educacionais
-│   ├── README.md                   # Índice de cursos
-│   ├── orgaos-publicos.md
-│   ├── direito-constitucional.md
-│   ├── fiscalizacao-cidada.md
-│   ├── licitacoes-contratos.md
-│   ├── dados-abertos.md
-│   ├── tecnologia-transparencia.md
-│   ├── meio-ambiente.md
-│   └── cultura.md
-│
-├── docs/                           # Documentação técnica
-│   ├── GOVERNANCA.md               # Modelo de governança
-│   ├── CURSOS_GOVERNANCA.md        # Governança dos cursos
-│   ├── denuncias.md                # Feature de denúncias
-│   ├── farejador-corrupcao.md      # Farejador de corrupção
-│   ├── api.md                      # Documentação da API
-│   └── LGPD.md                     # Conformidade com a LGPD
-│
-├── backend/                        # API REST
-│   ├── README.md                   # Stack e modelo de dados
-│   ├── src/
-│   ├── prisma/
-│   ├── tests/
-│   ├── docker-compose.yml
-│   └── Dockerfile
-│
-└── mobile/                         # App mobile
-    ├── README.md                   # Stack e telas
-    ├── src/
-    ├── app.json
-    └── eas.json
+├── backend/             # API FastAPI + Postgres + Redis
+├── mobile/              # (em breve) App React Native / Expo
+├── docs/                # Documentação educacional
+└── docker-compose.yml   # Ambiente completo de dev
 ```
 
-## Áreas Temáticas
+## 🚀 Subir o ambiente (Docker)
 
-O projeto cobre **9 áreas temáticas** com cursos, denúncias, dados públicos e dashboards:
-
-- 🏥 [Saúde](./areas/saude.md)
-- 🎓 [Educação](./areas/educacao.md)
-- 🍞 [Alimentação](./areas/alimentacao.md)
-- 🚗 [Transporte](./areas/transporte.md)
-- 👮 [Segurança](./areas/seguranca.md)
-- 💧 [Saneamento](./areas/saneamento.md)
-- 💰 [Finanças](./areas/financas.md)
-- 🌱 [Meio Ambiente](./areas/meio-ambiente.md)
-- 🎭 [Cultura](./areas/cultura.md)
-
-## Cursos
-
-**8 cursos** sobre transparência, fiscalização e direitos do cidadão:
-
-- 🏛️ [Órgãos Públicos](./cursos/orgaos-publicos.md)
-- ⚖️ [Direito Constitucional](./cursos/direito-constitucional.md)
-- 🛡️ [Fiscalização Cidadã](./cursos/fiscalizacao-cidada.md)
-- 📜 [Licitações e Contratos](./cursos/licitacoes-contratos.md)
-- 📊 [Dados Abertos](./cursos/dados-abertos.md)
-- 💻 [Tecnologia e Transparência](./cursos/tecnologia-transparencia.md)
-- 🌱 [Meio Ambiente](./cursos/meio-ambiente.md)
-- 🎭 [Cultura](./cursos/cultura.md)
-
-## Features
-
-- 📢 **Denúncias Cidadãs** — envie e acompanhe denúncias com foto, vídeo e geolocalização
-- 🕵️ **Farejador de Corrupção** — sistema automatizado que monitora dados públicos em busca de padrões suspeitos
-- 🗺️ **Mapa Interativo** — visualize denúncias e áreas críticas
-- 📊 **Dashboards** — gastos públicos em tempo real
-- 🎓 **Cursos** — educação para a cidadania
-- 🏆 **Sistema de Pontos** — gamificação para incentivar a participação
-- 🔒 **LGPD** — conformidade com a Lei Geral de Proteção de Dados
-
-## Tecnologias
-
-- **Backend:** Node.js + TypeScript + Express + Prisma + PostgreSQL
-- **Mobile:** React Native + Expo + TypeScript
-- **IA/ML:** Python (Farejador de Corrupção)
-- **Infra:** Docker + Docker Compose
-- **CI/CD:** GitHub Actions
-
-## Como Contribuir
-
-Quer ajudar? Veja [CONTRIBUTING.md](./CONTRIBUTING.md) e [GOVERNANÇA](./docs/GOVERNANCA.md) para entender o modelo de governança colaborativa.
+Pré-requisitos: [Docker](https://docs.docker.com/get-docker/) e [Docker Compose](https://docs.docker.com/compose/install/).
 
 ```bash
-# 1. Fork o repositório
-# 2. Crie uma branch (git checkout -b feature/minha-contribuicao)
-# 3. Faça commit (git commit -m 'feat: minha contribuição')
-# 4. Push (git push origin feature/minha-contribuicao)
-# 5. Abra um Pull Request
+# 1. Copie o .env (edite se quiser)
+cp backend/.env.example backend/.env
+
+# 2. Suba Postgres + Redis + API
+docker compose up -d
+
+# 3. Acompanhe os logs
+docker compose logs -f api
+
+# 4. Acesse:
+#    - API:        http://localhost:8000
+#    - Docs:       http://localhost:8000/docs
+#    - Postgres:   localhost:5432
+#    - Redis:      localhost:6379
 ```
 
-## Licença
+Para subir também o **Adminer** (gerenciador web do banco):
 
-Este projeto está licenciado sob a [Licença MIT](./LICENSE).
+```bash
+docker compose --profile tools up -d
+# Acesse: http://localhost:8080
+```
 
-## Contato
+## 🐳 Sem Docker (desenvolvimento local)
 
-- **Repositório:** [github.com/projetocidadao/projetocidadao](https://github.com/projetocidadao/projetocidadao)
-- **Issues:** [github.com/projetocidadao/projetocidadao/issues](https://github.com/projetocidadao/projetocidadao/issues)
-- **Discussões:** [github.com/projetocidadao/projetocidadao/discussions](https://github.com/projetocidadao/projetocidadao/discussions)
+```bash
+cd backend
+pip install -r requirements.txt
+cp .env.example .env
 
----
+# Suba apenas Postgres e Redis localmente
+# (ou use Docker só pra eles: docker compose up postgres redis -d)
 
-📌 *Todo poder emana do povo, para o povo. A transparência é o caminho, a fiscalização é o meio, a cidadania é o destino.*
+alembic upgrade head
+python scripts/seed.py
+uvicorn main:app --reload
+```
+
+## 📚 Documentação
+
+- [Áreas Temáticas](docs/areas/README.md)
+- [Cursos](docs/cursos/README.md)
+- [Schema do Banco](backend/SCHEMA.md) *(em breve)*
+
+## 🤝 Como contribuir
+
+1. Fork o repositório
+2. Crie uma branch (`git checkout -b feat/minha-feature`)
+3. Commit suas mudanças (`git commit -m 'feat: minha feature'`)
+4. Push (`git push origin feat/minha-feature`)
+5. Abra um Pull Request
+
+## 📜 Licença
+
+MIT — veja [LICENSE](LICENSE).
