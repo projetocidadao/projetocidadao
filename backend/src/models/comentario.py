@@ -33,9 +33,11 @@ class Comentario(Base, TimestampMixin):
     # Relationships
     autor: Mapped["Usuario"] = relationship("Usuario", back_populates="comentarios")
     denuncia: Mapped["Denuncia"] = relationship("Denuncia", back_populates="comentarios")
+    parent: Mapped[Optional["Comentario"]] = relationship(
+        "Comentario", remote_side="Comentario.id", back_populates="respostas"
+    )
     respostas: Mapped[List["Comentario"]] = relationship(
-        "Comentario", backref=relationship.backref("parent", remote_side=[id]),
-        cascade="all, delete-orphan",
+        "Comentario", back_populates="parent", cascade="all, delete-orphan"
     )
 
     def __repr__(self) -> str:
