@@ -10,23 +10,41 @@ from fastapi.responses import JSONResponse
 from src.db.config import settings
 from src.db.session import async_engine
 from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos, anexos
+from src.api import admin_farejador
+
+try:
+    from src.farejador.scheduler import iniciar_scheduler, parar_scheduler
+    FAREJADOR_DISPONIVEL = True
+except ImportError:
+    FAREJADOR_DISPONIVEL = False
 
 
-# -----------------------------------------------------------------------------
-# Lifespan — inicializa e finaliza recursos
-# -----------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Ações no startup/shutdown."""
     print("🚀 Projeto Cidadão API iniciando...")
+
+    if getattr(settings, "farejador_scheduler_enabled", True) and FAREJADOR_DISPONIVEL:
+        try:
+            iniciar_scheduler(
+                cron_expression=getattr(settings, "farejador_cron", "0 */6 * * *"),
+                timezone=getattr(settings, "farejador_timezone", "America/Sao_Paulo"),
+            )
+            print("🕵️  Farejador de Corrupção: scheduler ATIVO")
+        except Exception as e:
+            print(f"⚠️  Falha ao iniciar scheduler do farejador: {e}")
+
     yield
+
+    if FAREJADOR_DISPONIVEL:
+        try:
+            parar_scheduler()
+        except Exception:
+            pass
+
     print("👋 Encerrando conexão com o banco...")
     await async_engine.dispose()
 
 
-# -----------------------------------------------------------------------------
-# App
-# -----------------------------------------------------------------------------
 app = FastAPI(
     title="🇧🇷 Projeto Cidadão",
     description=(
@@ -39,18 +57,14 @@ app = FastAPI(
         "- Áreas temáticas (Saúde, Educação, etc.)\n"
         "- Cursos de capacitação\n"
         "- Comentários em thread\n"
-        "- Farejador de Corrupção (sinais automatizados)"
+        "- Farejador de Corrupção (heurísticas + scheduler automático)"
     ),
-    version="0.3.0",
+    version="0.4.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
 )
 
-
-# -----------------------------------------------------------------------------
-# CORS
-# -----------------------------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.app_cors_origins,
@@ -60,17 +74,14 @@ app.add_middleware(
 )
 
 
-# -----------------------------------------------------------------------------
-# Health check
-# -----------------------------------------------------------------------------
 @app.get("/health", tags=["health"], summary="Verificar saúde da API")
 async def health() -> dict:
-    """Endpoint de health check (usado pelo Docker)."""
     return {
         "status": "ok",
         "service": "projeto-cidadao-api",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "env": settings.app_env,
+        "farejador_scheduler": FAREJADOR_DISPONIVEL,
     }
 
 
@@ -83,9 +94,6 @@ async def root() -> dict:
     }
 
 
-# -----------------------------------------------------------------------------
-# Routers
-# -----------------------------------------------------------------------------
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(areas.router)
@@ -95,11 +103,9 @@ app.include_router(comentarios.router)
 app.include_router(faros.router)
 app.include_router(votos.router)
 app.include_router(anexos.router)
+app.include_router(admin_farejador.router)
 
 
-# -----------------------------------------------------------------------------
-# Exception handlers
-# -----------------------------------------------------------------------------
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
     return JSONResponse(
