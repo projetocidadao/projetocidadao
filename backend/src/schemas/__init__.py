@@ -17,6 +17,9 @@ from src.schemas.faro import FaroBase, FaroCreate, FaroUpdate, FaroRead
 from src.schemas.voto import (
     VotoBase, VotoCreate, VotoUpdate, VotoRead, RankingItem, VotoStats
 )
+from src.schemas.anexo import (
+    AnexoBase, AnexoCreate, AnexoRead, AnexoUpdate, UploadResponse, AnexoStats
+)
 
 __all__ = [
     "AreaBase", "AreaCreate", "AreaUpdate", "AreaRead",
@@ -27,4 +30,5 @@ __all__ = [
     "ComentarioBase", "ComentarioCreate", "ComentarioUpdate", "ComentarioRead",
     "FaroBase", "FaroCreate", "FaroUpdate", "FaroRead",
     "VotoBase", "VotoCreate", "VotoUpdate", "VotoRead", "RankingItem", "VotoStats",
+    "AnexoBase", "AnexoCreate", "AnexoRead", "AnexoUpdate", "UploadResponse", "AnexoStats",
 ]
