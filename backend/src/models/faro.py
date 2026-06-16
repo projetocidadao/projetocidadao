@@ -5,8 +5,8 @@ Sinalização do Farejador de Corrupção — caso suspeito detectado.
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy import String, Text, Integer, Float, ForeignKey, DateTime, Enum as SAEnum, JSON
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String, Text, Integer, ForeignKey, DateTime, Enum as SAEnum, JSON
+from sqlalchemy.orm import Mapped, mapped_column
 
 from src.db.base import Base, TimestampMixin
 from src.models.enums import StatusFaro
@@ -19,7 +19,6 @@ class Faro(Base, TimestampMixin):
 
     # Identificação da entidade sinalizada
     tipo_entidade: Mapped[str] = mapped_column(String(30), nullable=False, index=True)
-    # tipo_entidade: 'licitacao' | 'contrato' | 'empresa' | 'pessoa' | 'folha' | 'convenio'
     referencia_id: Mapped[str] = mapped_column(String(100), nullable=False, index=True)
     entidade_nome: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
