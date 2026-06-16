@@ -1,11 +1,10 @@
 """
-Configurações da aplicação (Pydantic Settings).
-Carrega variáveis de ambiente do .env.
+Configurações carregadas de variáveis de ambiente.
 """
 from functools import lru_cache
 from typing import List
 
-from pydantic import Field, field_validator
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -17,49 +16,31 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # --- Database ---
-    database_url: str = Field(
-        default="postgresql+asyncpg://projetocidadao:changeme@localhost:5432/projetocidadao",
-        alias="DATABASE_URL",
-    )
-    database_url_sync: str = Field(
-        default="postgresql+psycopg2://projetocidadao:changeme@localhost:5432/projetocidadao",
-        alias="DATABASE_URL_SYNC",
-    )
+    database_url: str = "postgresql+asyncpg://projetocidadao:changeme@localhost:5432/projetocidadao"
+    database_url_sync: str = "postgresql+psycopg2://projetocidadao:changeme@localhost:5432/projetocidadao"
+    redis_url: str = "redis://localhost:6379/0"
 
-    # --- Redis ---
-    redis_url: str = Field(default="redis://localhost:6379/0", alias="REDIS_URL")
+    jwt_secret: str = "changeme-super-secret-key"
+    jwt_algorithm: str = "HS256"
+    jwt_expires_minutes: int = 60 * 24 * 7
 
-    # --- Auth ---
-    jwt_secret: str = Field(default="changeme", alias="JWT_SECRET")
-    jwt_algorithm: str = Field(default="HS256", alias="JWT_ALGORITHM")
-    jwt_expires_minutes: int = Field(default=10080, alias="JWT_EXPIRES_MINUTES")  # 7 dias
+    app_env: str = "development"
+    app_debug: bool = True
+    app_port: int = 8000
+    app_cors_origins: List[str] = ["*"]
 
-    # --- App ---
-    app_env: str = Field(default="development", alias="APP_ENV")
-    app_debug: bool = Field(default=True, alias="APP_DEBUG")
-    app_port: int = Field(default=8000, alias="APP_PORT")
-    app_cors_origins: List[str] = Field(
-        default=["http://localhost:3000", "http://localhost:8081"],
-        alias="APP_CORS_ORIGINS",
-    )
+    s3_endpoint: str = ""
+    s3_access_key: str = ""
+    s3_secret_key: str = ""
+    s3_bucket: str = "projetocidadao"
+    s3_region: str = "us-east-1"
 
-    # --- Storage ---
-    s3_endpoint: str = Field(default="", alias="S3_ENDPOINT")
-    s3_access_key: str = Field(default="", alias="S3_ACCESS_KEY")
-    s3_secret_key: str = Field(default="", alias="S3_SECRET_KEY")
-    s3_bucket: str = Field(default="projetocidadao", alias="S3_BUCKET")
-    s3_region: str = Field(default="us-east-1", alias="S3_REGION")
+    telegram_bot_token: str = ""
 
-    # --- Telegram ---
-    telegram_bot_token: str = Field(default="", alias="TELEGRAM_BOT_TOKEN")
-
-    @field_validator("app_cors_origins", mode="before")
-    @classmethod
-    def split_cors_origins(cls, v):
-        if isinstance(v, str):
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
-        return v
+    farejador_scheduler_enabled: bool = True
+    farejador_cron: str = "0 */6 * * *"
+    farejador_timezone: str = "America/Sao_Paulo"
+    farejador_min_score: int = 30
 
 
 @lru_cache
