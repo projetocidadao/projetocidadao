@@ -1,0 +1,132 @@
+# =============================================================================
+# Projeto Cidadão — Docker Compose
+# Sobe o ambiente completo de desenvolvimento:
+#   - Postgres 16 + PostGIS (banco de dados)
+#   - Redis 7 (cache / filas)
+#   - Backend FastAPI (API)
+#   - Adminer (gerenciador web do banco, opcional via profile)
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # Banco de dados — Postgres 16 com PostGIS (geolocalização)
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: projetocidadao-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: projetocidadao
+      POSTGRES_USER: projetocidadao
+      POSTGRES_PASSWORD: changeme
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/scripts/init-postgis.sql:/docker-entrypoint-initdb.d/01-postgis.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U projetocidadao -d projetocidadao"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - projetocidadao-net
+
+  # ---------------------------------------------------------------------------
+  # Redis 7 — cache, rate limiting, filas assíncronas
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: projetocidadao-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - projetocidadao-net
+
+  # ---------------------------------------------------------------------------
+  # API FastAPI
+  # ---------------------------------------------------------------------------
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: projetocidadao-api
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://projetocidadao:changeme@postgres:5432/projetocidadao
+      DATABASE_URL_SYNC: postgresql+psycopg2://projetocidadao:changeme@postgres:5432/projetocidadao
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/scripts:/app/scripts
+    command: >
+      sh -c "
+        echo '⏳ Aguardando banco de dados...' &&
+        python scripts/wait_for_db.py &&
+        echo '🔄 Rodando migrations...' &&
+        alembic upgrade head &&
+        echo '🌱 Populando banco (se necessário)...' &&
+        python scripts/seed.py &&
+        echo '🚀 Iniciando API...' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      "
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - projetocidadao-net
+
+  # ---------------------------------------------------------------------------
+  # Adminer — interface web para o banco (apenas com --profile tools)
+  # ---------------------------------------------------------------------------
+  adminer:
+    image: adminer:latest
+    container_name: projetocidadao-adminer
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - projetocidadao-net
+    profiles:
+      - tools
+
+# =============================================================================
+# Volumes nomeados (persistem entre `docker compose down`)
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# =============================================================================
+# Network customizada (DNS automático entre os serviços)
+# =============================================================================
+networks:
+  projetocidadao-net:
+    driver: bridge
