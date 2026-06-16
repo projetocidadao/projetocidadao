@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 from src.db.config import settings
 from src.db.session import async_engine
-from src.api import auth, users, areas, cursos, denuncias, comentarios, faros
+from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos
 
 
 # -----------------------------------------------------------------------------
@@ -34,12 +34,13 @@ app = FastAPI(
         "**Funcionalidades:**\n"
         "- Autenticação JWT\n"
         "- CRUD de denúncias com geolocalização\n"
+        "- Votação com gamificação e ranking\n"
         "- Áreas temáticas (Saúde, Educação, etc.)\n"
         "- Cursos de capacitação\n"
         "- Comentários em thread\n"
         "- Farejador de Corrupção (sinais automatizados)"
     ),
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -67,7 +68,7 @@ async def health() -> dict:
     return {
         "status": "ok",
         "service": "projeto-cidadao-api",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "env": settings.app_env,
     }
 
@@ -91,6 +92,7 @@ app.include_router(cursos.router)
 app.include_router(denuncias.router)
 app.include_router(comentarios.router)
 app.include_router(faros.router)
+app.include_router(votos.router)
 
 
 # -----------------------------------------------------------------------------
