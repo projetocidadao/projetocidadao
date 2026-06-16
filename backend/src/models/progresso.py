@@ -5,7 +5,7 @@ Progresso de um usuário em um curso.
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy import ForeignKey, Integer, DateTime
+from sqlalchemy import ForeignKey, Integer, DateTime, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.db.base import Base, TimestampMixin
@@ -13,6 +13,9 @@ from src.db.base import Base, TimestampMixin
 
 class Progresso(Base, TimestampMixin):
     __tablename__ = "progressos"
+    __table_args__ = (
+        UniqueConstraint("usuario_id", "curso_id", name="uq_progresso_usuario_curso"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     usuario_id: Mapped[int] = mapped_column(
@@ -27,11 +30,6 @@ class Progresso(Base, TimestampMixin):
         DateTime(timezone=True), nullable=True
     )
     pontos_ganhos: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-
-    # Unique constraint: um progresso por usuário/curso
-    __table_args__ = (
-        UniqueConstraint("usuario_id", "curso_id", name="uq_progresso_usuario_curso"),
-    )
 
     # Relationships
     usuario: Mapped["Usuario"] = relationship("Usuario", back_populates="progressos")
