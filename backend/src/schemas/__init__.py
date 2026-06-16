@@ -1,6 +1,5 @@
 """
 Schemas Pydantic (DTOs) — entrada e saída da API.
-Separa a forma do dado na rede dos models do banco.
 """
 from src.schemas.area import AreaBase, AreaCreate, AreaUpdate, AreaRead
 from src.schemas.curso import CursoBase, CursoCreate, CursoUpdate, CursoRead
@@ -20,6 +19,11 @@ from src.schemas.voto import (
 from src.schemas.anexo import (
     AnexoBase, AnexoCreate, AnexoRead, AnexoUpdate, UploadResponse, AnexoStats
 )
+from src.schemas.notificacao import (
+    NotificacaoBase, NotificacaoCreate, NotificacaoRead, NotificacaoUpdate,
+    NotificacaoStats, PreferenciasNotificacao, PreferenciasNotificacaoUpdate,
+    TelegramLinkRequest, TelegramLinkResponse,
+)
 
 __all__ = [
     "AreaBase", "AreaCreate", "AreaUpdate", "AreaRead",
@@ -31,4 +35,7 @@ __all__ = [
     "FaroBase", "FaroCreate", "FaroUpdate", "FaroRead",
     "VotoBase", "VotoCreate", "VotoUpdate", "VotoRead", "RankingItem", "VotoStats",
     "AnexoBase", "AnexoCreate", "AnexoRead", "AnexoUpdate", "UploadResponse", "AnexoStats",
+    "NotificacaoBase", "NotificacaoCreate", "NotificacaoRead", "NotificacaoUpdate",
+    "NotificacaoStats", "PreferenciasNotificacao", "PreferenciasNotificacaoUpdate",
+    "TelegramLinkRequest", "TelegramLinkResponse",
 ]
