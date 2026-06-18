@@ -1,132 +1,150 @@
+name: projeto-cidadao
+
 # =============================================================================
-# Projeto Cidadão — Docker Compose
-# Sobe o ambiente completo de desenvolvimento:
-#   - Postgres 16 + PostGIS (banco de dados)
-#   - Redis 7 (cache / filas)
-#   - Backend FastAPI (API)
-#   - Adminer (gerenciador web do banco, opcional via profile)
+# Projeto Cidadão — Stack completa de desenvolvimento/produção
+# =============================================================================
+# Subir tudo:    docker-compose up -d
+# Ver logs:      docker-compose logs -f api
+# Derrubar:      docker-compose down
+# Resetar dados: docker-compose down -v
 # =============================================================================
 
 services:
   # ---------------------------------------------------------------------------
-  # Banco de dados — Postgres 16 com PostGIS (geolocalização)
+  # Banco de dados (Postgres + PostGIS)
   # ---------------------------------------------------------------------------
-  postgres:
-    image: postgis/postgis:16-3.4
-    container_name: projetocidadao-postgres
+  db:
+    image: postgis/postgis:15-3.4-alpine
+    container_name: pc_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: projetocidadao
-      POSTGRES_USER: projetocidadao
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: ${POSTGRES_DB:-projetocidadao}
+      POSTGRES_USER: ${POSTGRES_USER:-cidadao}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mudar123}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./backend/scripts/init-postgis.sql:/docker-entrypoint-initdb.d/01-postgis.sql:ro
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U projetocidadao -d projetocidadao"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cidadao} -d ${POSTGRES_DB:-projetocidadao}"]
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 5
     networks:
-      - projetocidadao-net
+      - pc_net
 
   # ---------------------------------------------------------------------------
-  # Redis 7 — cache, rate limiting, filas assíncronas
+  # Cache e filas (Redis)
   # ---------------------------------------------------------------------------
   redis:
     image: redis:7-alpine
-    container_name: projetocidadao-redis
+    container_name: pc_redis
     restart: unless-stopped
-    command: redis-server --appendonly yes
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
     volumes:
-      - redis_data:/data
+      - redisdata:/data
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
+      interval: 10s
       timeout: 3s
-      retries: 10
+      retries: 5
     networks:
-      - projetocidadao-net
+      - pc_net
 
   # ---------------------------------------------------------------------------
-  # API FastAPI
+  # API (FastAPI)
   # ---------------------------------------------------------------------------
   api:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: projetocidadao-api
+    container_name: pc_api
     restart: unless-stopped
     env_file:
-      - ./backend/.env
+      - .env
     environment:
-      DATABASE_URL: postgresql+asyncpg://projetocidadao:changeme@postgres:5432/projetocidadao
-      DATABASE_URL_SYNC: postgresql+psycopg2://projetocidadao:changeme@postgres:5432/projetocidadao
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-cidadao}:${POSTGRES_PASSWORD:-mudar123}@db:5432/${POSTGRES_DB:-projetocidadao}
       REDIS_URL: redis://redis:6379/0
-    ports:
-      - "8000:8000"
+      APP_ENV: ${APP_ENV:-production}
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
       redis:
         condition: service_healthy
     volumes:
-      - ./backend/src:/app/src
-      - ./backend/scripts:/app/scripts
-    command: >
-      sh -c "
-        echo '⏳ Aguardando banco de dados...' &&
-        python scripts/wait_for_db.py &&
-        echo '🔄 Rodando migrations...' &&
-        alembic upgrade head &&
-        echo '🌱 Populando banco (se necessário)...' &&
-        python scripts/seed.py &&
-        echo '🚀 Iniciando API...' &&
-        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-      "
+      - ./backend:/app
+      - media_data:/app/media
+    ports:
+      - "${API_PORT:-8000}:8000"
+    command: ["./scripts/entrypoint.sh"]
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/api/health', timeout=5).raise_for_status()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
     networks:
-      - projetocidadao-net
+      - pc_net
 
   # ---------------------------------------------------------------------------
-  # Adminer — interface web para o banco (apenas com --profile tools)
+  # Nginx (reverse proxy + SSL)
   # ---------------------------------------------------------------------------
-  adminer:
-    image: adminer:latest
-    container_name: projetocidadao-adminer
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: pc_nginx
     restart: unless-stopped
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
     ports:
-      - "8080:8080"
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+      - media_data:/var/www/media:ro
     depends_on:
-      - postgres
+      - api
     networks:
-      - projetocidadao-net
-    profiles:
-      - tools
+      - pc_net
+
+  # ---------------------------------------------------------------------------
+  # Backup automático (cron diário)
+  # ---------------------------------------------------------------------------
+  backup:
+    image: prodrigestivill/postgres-backup-local
+    container_name: pc_backup
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: ${POSTGRES_DB:-projetocidadao}
+      POSTGRES_USER: ${POSTGRES_USER:-cidadao}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mudar123}
+      SCHEDULE: "@daily"
+      BACKUP_KEEP_DAYS: 7
+      BACKUP_KEEP_WEEKS: 4
+      BACKUP_KEEP_MONTHS: 6
+      HEALTHCHECK_PORT: 8080
+    volumes:
+      - ./backups:/backups
+    networks:
+      - pc_net
 
 # =============================================================================
-# Volumes nomeados (persistem entre `docker compose down`)
+# Volumes e redes
 # =============================================================================
 volumes:
-  postgres_data:
-    driver: local
-  redis_data:
-    driver: local
+  pgdata:
+    name: pc_pgdata
+  redisdata:
+    name: pc_redisdata
+  media_data:
+    name: pc_media
 
-# =============================================================================
-# Network customizada (DNS automático entre os serviços)
-# =============================================================================
 networks:
-  projetocidadao-net:
+  pc_net:
+    name: pc_network
     driver: bridge
