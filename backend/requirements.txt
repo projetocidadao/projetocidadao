@@ -1,43 +1,56 @@
 # =============================================================================
-# Projeto Cidadão — dependências Python
+# Projeto Cidadão — Dependências Python
 # =============================================================================
-
 # Web framework
-fastapi==0.115.0
-uvicorn[standard]==0.32.0
-python-multipart==0.0.12  # upload de arquivos
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+gunicorn==21.2.0
+python-multipart==0.0.9
+
+# Banco de dados
+sqlalchemy[asyncio]==2.0.27
+asyncpg==0.29.0
+alembic==1.13.1
+geoalchemy2==0.14.3
+psycopg2-binary==2.9.9
 
 # Validação
-pydantic==2.9.2
-pydantic-settings==2.5.2
-email-validator==2.2.0
+pydantic==2.6.1
+pydantic-settings==2.2.1
+email-validator==2.1.0
 
-# Auth
+# Autenticação
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.1.2
 
-# Database
-sqlalchemy[asyncio]==2.0.35
-asyncpg==0.30.0
-psycopg2-binary==2.9.10
-alembic==1.13.3
+# Cache/filas
+redis==5.0.1
+hiredis==2.3.2
 
-# Cache / filas
-redis==5.1.1
-
-# Storage S3
-boto3==1.35.36
-
-# Detecção de MIME e metadados
-python-magic==0.4.27
-Pillow==10.4.0
-
-# Scheduler
+# Tarefas agendadas
 apscheduler==3.10.4
 
-# HTTP client (Telegram Bot API, dados abertos)
-httpx==0.27.2
+# HTTP client
+httpx==0.27.0
+aiofiles==23.2.1
+
+# Utilitários
+python-slugify==8.0.1
+python-dateutil==2.8.2
+pytz==2024.1
+
+# Logging
+structlog==24.1.0
+
+# Telegram (opcional)
+python-telegram-bot==20.7
+
+# Monitoramento
+sentry-sdk[fastapi]==1.40.5
 
 # Testes
-pytest==8.3.3
-pytest-asyncio==0.24.0
+pytest==8.0.0
+pytest-asyncio==0.23.5
+pytest-cov==4.1.0
+httpx==0.27.0
