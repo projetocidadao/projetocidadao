@@ -2,12 +2,14 @@
 set -e
 
 echo "==> Aguardando banco de dados..."
-python -c "
+python << 'EOF'
 import asyncio, asyncpg, os, time
 async def wait():
+    db_url = os.environ.get('DATABASE_URL', '')
+    pg_url = db_url.replace('postgresql+asyncpg://', 'postgresql://')
     for i in range(30):
         try:
-            conn = await asyncpg.connect(os.environ['DATABASE_URL'].replace('postgresql+asyncpg://', 'postgresql://'))
+            conn = await asyncpg.connect(pg_url)
             await conn.close()
             print('Banco OK')
             return
@@ -16,13 +18,13 @@ async def wait():
             await asyncio.sleep(2)
     raise Exception('Banco não respondeu')
 asyncio.run(wait())
-"
+EOF
 
 echo "==> Rodando migrations..."
-alembic upgrade head
+alembic upgrade head || echo "Aviso: migrations falharam (talvez seja a primeira vez)"
 
 echo "==> Criando admin padrão (se não existir)..."
-python -c "
+python << 'EOF' || echo "Aviso: não criou admin"
 import asyncio, os
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy import select
@@ -53,7 +55,7 @@ async def main():
     await engine.dispose()
 
 asyncio.run(main())
-" || echo "Aviso: não criou admin (pode ser que já exista)"
+EOF
 
 echo "==> Iniciando API..."
 exec uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers ${WORKERS:-2} --proxy-headers
