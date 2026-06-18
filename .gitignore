@@ -1,0 +1,62 @@
+# =============================================================================
+# Projeto Cidadão — .gitignore
+# =============================================================================
+
+# Ambiente
+.env
+.env.*
+!.env.example
+*.local
+venv/
+env/
+ENV/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.egg-info/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Docker
+backups/
+postgres-data/
+redis-data/
+media/
+
+# Nginx
+nginx/certs/
+nginx/*.log
+
+# Banco local
+*.db
+*.sqlite
+*.sqlite3
+pgdata/
+
+# OS
+.DS_Store
+Thumbs.db
