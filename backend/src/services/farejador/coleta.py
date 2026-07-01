@@ -89,8 +89,8 @@ class ColetorBase:
         """Persiste o faro no banco. Implementação padrão."""
         # Importação tardia pra evitar ciclos
         try:
-            from src.models.faro import Faro
-            from src.models.enums import NivelRisco
+            from src.db.models.faro import Faro
+            from src.db.models.enums import NivelRisco
         except ImportError:
             logger.warning("Modelo Faro não disponível — pulando persistência")
             return False
@@ -289,9 +289,9 @@ async def executar_coleta(
 # =============================================================================
 async def job_coleta_periodica():
     """Job executado periodicamente pelo scheduler."""
-    from src.db.session import async_session
+    from src.db.session import AsyncSessionLocal
 
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         try:
             resultado = await executar_coleta(session)
             logger.info(f"Coleta periódica: {resultado['total_fontes']} fontes processadas")

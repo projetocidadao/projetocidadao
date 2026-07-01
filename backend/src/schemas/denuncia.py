@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.models.enums import CategoriaDenuncia, StatusDenuncia
+from src.db.models.enums import CategoriaDenuncia, StatusDenuncia
 
 
 class DenunciaBase(BaseModel):

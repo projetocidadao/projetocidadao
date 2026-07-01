@@ -58,5 +58,5 @@ class Comentario(Base):
     )
     respostas = relationship("Comentario", remote_side="Comentario.parent_id")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Comentario {self.tipo_alvo.value}:{self.alvo_id}>"

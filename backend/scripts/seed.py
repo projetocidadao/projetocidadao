@@ -9,7 +9,7 @@ import uuid
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.session import async_session
+from src.db.session import AsyncSessionLocal
 from src.models.area import Area
 from src.models.usuario import Usuario, UserRole
 
@@ -135,7 +135,7 @@ async def seed_admin(session: AsyncSession) -> bool:
 
 async def main():
     print("🌱 Iniciando seed do banco...")
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         areas = await seed_areas(session)
         admin = await seed_admin(session)
         print(f"✅ {areas} áreas criadas")

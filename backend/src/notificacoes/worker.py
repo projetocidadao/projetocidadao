@@ -13,10 +13,10 @@ from typing import List, Optional, Dict, Any
 from sqlalchemy import select, and_, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.db.session import async_session
-from src.models.notificacao import Notificacao
-from src.models.usuario import Usuario
-from src.models.enums import (
+from src.db.session import AsyncSessionLocal
+from src.db.models.notificacao import Notificacao
+from src.db.models.usuario import Usuario
+from src.db.models.enums import (
     TipoNotificacao, CanalNotificacao, StatusNotificacao, UserRole
 )
 from src.notificacoes.telegram import enviar_mensagem_telegram
@@ -189,7 +189,7 @@ async def hook_faro_criado(faro) -> None:
     Chamado quando um faro novo é criado.
     Notifica moderadores+ para faros com score >= 30 (CRÍTICO se >= 70).
     """
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         # Encontra moderadores e admins
         result = await session.execute(
             select(Usuario).where(Usuario.role.in_([UserRole.MODERADOR, UserRole.ADMIN]))
@@ -230,7 +230,7 @@ async def hook_denuncia_status(
     titulo: str = "",
 ) -> None:
     """Chamado quando o status de uma denúncia muda."""
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         await criar_notificacao(
             session=session,
             usuario_id=usuario_id,
@@ -247,7 +247,7 @@ async def hook_denuncia_status(
 
 async def hook_nivel_up(usuario_id: int, nivel: int, pontos: int) -> None:
     """Chamado quando o usuário sobe de nível."""
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         await criar_notificacao(
             session=session,
             usuario_id=usuario_id,

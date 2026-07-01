@@ -67,7 +67,7 @@ class Curso(Base):
                             order_by="Modulo.ordem")
     progressos = relationship("Progresso", back_populates="curso", cascade="all, delete-orphan")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Curso {self.titulo} ({self.status.value})>"
 
 
@@ -96,5 +96,5 @@ class Modulo(Base):
     # Relacionamentos
     curso = relationship("Curso", back_populates="modulos")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Modulo {self.titulo} (ordem={self.ordem})>"

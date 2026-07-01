@@ -7,11 +7,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.faro import Faro
-from src.models.enums import StatusFaro
+from src.db.models.faro import Faro
+from src.db.models.enums import StatusFaro
 from src.schemas.faro import FaroCreate, FaroRead, FaroUpdate
 from src.core.deps import require_moderator, require_admin
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 
 
 router = APIRouter(prefix="/api/faros", tags=["farejador"])

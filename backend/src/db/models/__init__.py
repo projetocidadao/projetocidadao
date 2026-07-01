@@ -8,6 +8,9 @@ from src.db.models.progresso import Progresso
 from src.db.models.denuncia import Denuncia, Anexo
 from src.db.models.comentario import Comentario
 from src.db.models.farejador import CasoSuspeito, Heuristica
+from src.db.models.faro import Faro
+from src.db.models.voto import Voto
+from src.db.models.notificacao import Notificacao
 
 __all__ = [
     "Usuario",

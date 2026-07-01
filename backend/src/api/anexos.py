@@ -19,8 +19,8 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.anexo import Anexo
-from src.models.denuncia import Denuncia
+from src.db.models.denuncia import Anexo
+from src.db.models.denuncia import Denuncia
 from src.schemas.anexo import AnexoRead, AnexoUpdate, UploadResponse, AnexoStats
 from src.core.deps import get_current_active_user, require_moderator
 from src.core.storage import (
@@ -33,8 +33,8 @@ from src.core.storage import (
     deletar_arquivo,
     abrir_arquivo_local,
 )
-from src.models.usuario import Usuario
-from src.models.enums import TipoAnexo
+from src.db.models.usuario import Usuario
+from src.db.models.enums import TipoAnexo
 
 
 router = APIRouter(prefix="/api/denuncias", tags=["anexos"])

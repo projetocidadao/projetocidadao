@@ -7,10 +7,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.curso import Curso
+from src.db.models.curso import Curso
 from src.schemas.curso import CursoCreate, CursoRead, CursoUpdate
 from src.core.deps import get_current_active_user, require_moderator
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 
 
 router = APIRouter(prefix="/api/cursos", tags=["cursos"])

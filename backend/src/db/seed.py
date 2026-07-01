@@ -14,7 +14,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.config import settings
 from src.db.models.usuario import Usuario, Role
 from src.db.models.area import Area
-from src.db.session import async_session, engine
+from src.db.session import AsyncSessionLocal, engine
 
 
 AREAS_INICIAIS = [
@@ -141,7 +141,7 @@ async def main() -> None:
     print("🌱 Iniciando seed do banco de dados...")
     print(f"   DATABASE_URL: {settings.DATABASE_URL.split('@')[-1]}")  # esconde senha
 
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         print("📦 Criando áreas temáticas...")
         n_areas = await seed_areas(session)
         print(f"   ✅ {n_areas} áreas criadas")

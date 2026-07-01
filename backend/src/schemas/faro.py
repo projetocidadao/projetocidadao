@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.models.enums import StatusFaro
+from src.db.models.enums import StatusFaro
 
 
 class FaroBase(BaseModel):

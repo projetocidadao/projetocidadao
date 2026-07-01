@@ -7,10 +7,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.area import Area
+from src.db.models.area import Area
 from src.schemas.area import AreaRead
 from src.core.deps import get_current_active_user
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 
 
 router = APIRouter(prefix="/api/areas", tags=["areas"])

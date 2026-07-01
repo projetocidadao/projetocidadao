@@ -1,3 +1,4 @@
+from src.db.models.enums import UserRole
 """
 Model de Usuário
 Sistema de pontos pioneiros (3-2-1) + roles
@@ -15,11 +16,11 @@ from src.db.base import Base
 
 class Role(str, enum.Enum):
     """Níveis de participação no Projeto Cidadão"""
-    CIDADAO = "cidadao"          # Nível 1 — apenas consome
-    AVANCADO = "avancado"        # Nível 2 — pode comentar, sugerir
-    PIONEIRO = "pioneiro"        # Nível 3 — pode criar áreas/cursos
-    MODERADOR = "moderador"      # Nível 4 — pode aprovar contribuições
-    ADMIN = "admin"              # Nível 5 — controle total
+    CIDADAO = "cidadao"
+    AVANCADO = "avancado"
+    MODERADOR = "moderador"
+    ADMIN = "admin"
+
 
 
 class Usuario(Base):
@@ -42,7 +43,7 @@ class Usuario(Base):
     # Gamificação (sistema de pontos pioneiros)
     pontos: Mapped[int] = mapped_column(Integer, default=0, index=True)
     role: Mapped[Role] = mapped_column(
-        Enum(Role, name="role_enum"), default=Role.CIDADAO, nullable=False
+        Enum(Role, name="user_role", values_callable=lambda x: [e.value for e in x]), default=Role.CIDADAO, nullable=False
     )
     # Período de incubação — só pode criar conteúdo após N dias
     data_primeira_contribuicao: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
@@ -65,6 +66,8 @@ class Usuario(Base):
     denuncias = relationship("Denuncia", back_populates="autor", cascade="all, delete-orphan")
     comentarios = relationship("Comentario", back_populates="autor", cascade="all, delete-orphan")
     progressos = relationship("Progresso", back_populates="usuario", cascade="all, delete-orphan")
+    notificacoes = relationship("Notificacao", back_populates="usuario", cascade="all, delete-orphan")
+    votos = relationship("Voto", back_populates="usuario", cascade="all, delete-orphan")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Usuario {self.nome} ({self.role.value}, {self.pontos}pts)>"

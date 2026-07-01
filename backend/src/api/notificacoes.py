@@ -9,9 +9,9 @@ from sqlalchemy import select, and_, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.notificacao import Notificacao
-from src.models.usuario import Usuario
-from src.models.enums import StatusNotificacao, TipoNotificacao
+from src.db.models.notificacao import Notificacao
+from src.db.models.usuario import Usuario
+from src.db.models.enums import StatusNotificacao, TipoNotificacao
 from src.core.deps import get_current_active_user
 from src.schemas.notificacao import (
     NotificacaoRead, NotificacaoUpdate, NotificacaoStats,

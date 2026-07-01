@@ -8,8 +8,8 @@ from src.farejador.worker import executar_farejador, varrer_denuncias_recentes, 
 from src.farejador.scheduler import iniciar_scheduler, parar_scheduler, status_scheduler
 from src.farejador.heuristicas import HEURISTICAS_DISPONIVEIS
 from src.core.deps import require_admin
-from src.models.usuario import Usuario
-from src.db.session import async_session
+from src.db.models.usuario import Usuario
+from src.db.session import AsyncSessionLocal
 
 
 router = APIRouter(prefix="/api/admin/farejador", tags=["admin:farejador"])
@@ -52,7 +52,7 @@ async def varrer_denuncias(
     horas: int = 24,
     current_user: Usuario = Depends(require_admin),
 ) -> dict:
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         faros = await varrer_denuncias_recentes(session, horas=horas)
     return {"total": len(faros), "ids": [f.id for f in faros]}
 
@@ -61,7 +61,7 @@ async def varrer_denuncias(
 async def varrer_contratos(
     current_user: Usuario = Depends(require_admin),
 ) -> dict:
-    async with async_session() as session:
+    async with AsyncSessionLocal() as session:
         faros = await varrer_contratos_publicos(session)
     return {"total": len(faros), "ids": [f.id for f in faros]}
 

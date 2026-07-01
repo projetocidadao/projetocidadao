@@ -9,7 +9,7 @@ from sqlalchemy import String, Text, Integer, ForeignKey, DateTime, Enum as SAEn
 from sqlalchemy.orm import Mapped, mapped_column
 
 from src.db.base import Base, TimestampMixin
-from src.models.enums import StatusFaro
+from src.db.models.enums import StatusFaro
 
 
 class Faro(Base, TimestampMixin):
@@ -52,5 +52,5 @@ class Faro(Base, TimestampMixin):
         ForeignKey("denuncias.id", ondelete="SET NULL"), nullable=True
     )
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Faro id={self.id} score={self.score_risco} status={self.status.value}>"

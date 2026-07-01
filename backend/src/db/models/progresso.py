@@ -13,7 +13,7 @@ from src.db.base import Base
 
 class Progresso(Base):
     __tablename__ = "progressos"
-    __table_args__ = (
+    ___table_args___ = (
         UniqueConstraint("usuario_id", "curso_id", name="uq_progresso_usuario_curso"),
     )
 
@@ -41,5 +41,5 @@ class Progresso(Base):
     usuario = relationship("Usuario", back_populates="progressos")
     curso = relationship("Curso", back_populates="progressos")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Progresso usuario={self.usuario_id} curso={self.curso_id} {self.percent}%>"

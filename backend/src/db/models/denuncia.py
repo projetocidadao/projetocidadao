@@ -105,9 +105,15 @@ class Denuncia(Base):
     autor = relationship("Usuario", back_populates="denuncias")
     area = relationship("Area", back_populates="denuncias")
     anexos = relationship("Anexo", back_populates="denuncia", cascade="all, delete-orphan")
-    comentarios = relationship("Comentario", back_populates="denuncia", cascade="all, delete-orphan")
+    votos_usuarios = relationship("Voto", back_populates="denuncia", cascade="all, delete-orphan")
+    comentarios = relationship(
+        "Comentario",
+        primaryjoin="and_(Denuncia.id == foreign(Comentario.alvo_id), Comentario.tipo_alvo == 'denuncia')",
+        viewonly=True,
+        overlaps="denuncia"
+    )
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Denuncia {self.titulo[:50]} ({self.status.value})>"
 
 
@@ -133,5 +139,5 @@ class Anexo(Base):
     # Relacionamentos
     denuncia = relationship("Denuncia", back_populates="anexos")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Anexo {self.tipo} ({self.tamanho_bytes} bytes)>"

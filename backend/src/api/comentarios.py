@@ -7,10 +7,10 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.comentario import Comentario
+from src.db.models.comentario import Comentario
 from src.schemas.comentario import ComentarioCreate, ComentarioRead, ComentarioUpdate
 from src.core.deps import get_current_active_user
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 
 
 router = APIRouter(prefix="/api/denuncias/{denuncia_id}/comentarios", tags=["comentarios"])

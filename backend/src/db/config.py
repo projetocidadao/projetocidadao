@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     )
 
     database_url: str = "postgresql+asyncpg://projetocidadao:changeme@localhost:5432/projetocidadao"
-    database_url_sync: str = "postgresql+psycopg2://projetocidadao:changeme@localhost:5432/projetocidadao"
+    database_url_sync: str = ""
     redis_url: str = "redis://localhost:6379/0"
 
     jwt_secret: str = "changeme-super-secret-key"
@@ -45,7 +45,10 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    s = Settings()
+    if not s.database_url_sync:
+        s.database_url_sync = s.database_url.replace("+asyncpg", "+psycopg2")
+    return s
 
 
 settings = get_settings()

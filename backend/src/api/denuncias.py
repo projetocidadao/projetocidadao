@@ -8,11 +8,11 @@ from sqlalchemy import select, func, or_, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.denuncia import Denuncia
-from src.models.enums import StatusDenuncia
+from src.db.models.denuncia import Denuncia
+from src.db.models.enums import StatusDenuncia
 from src.schemas.denuncia import DenunciaCreate, DenunciaRead, DenunciaUpdate, DenunciaStatusUpdate
 from src.core.deps import get_current_active_user, require_moderator
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 
 
 router = APIRouter(prefix="/api/denuncias", tags=["denuncias"])

@@ -21,12 +21,12 @@ class Voto(Base, TimestampMixin):
     apoio: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     pontos: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
 
-    __table_args__ = (
+    ___table_args___ = (
         UniqueConstraint("usuario_id", "denuncia_id", name="uq_voto_usuario_denuncia"),
     )
 
     usuario: Mapped["Usuario"] = relationship("Usuario", back_populates="votos")
     denuncia: Mapped["Denuncia"] = relationship("Denuncia", back_populates="votos_usuarios")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Voto usuario_id={self.usuario_id} denuncia_id={self.denuncia_id} apoio={self.apoio}>"

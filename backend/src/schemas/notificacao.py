@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Optional, Dict, Any, List
 from pydantic import BaseModel, ConfigDict
 
-from src.models.enums import TipoNotificacao, CanalNotificacao, StatusNotificacao
+from src.db.models.enums import TipoNotificacao, CanalNotificacao, StatusNotificacao
 
 
 class NotificacaoBase(BaseModel):

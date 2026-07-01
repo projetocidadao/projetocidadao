@@ -39,5 +39,5 @@ class Area(Base):
     cursos = relationship("Curso", back_populates="area", cascade="all, delete-orphan")
     denuncias = relationship("Denuncia", back_populates="area")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Area {self.nome} ({self.slug})>"

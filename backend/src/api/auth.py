@@ -8,7 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
 from src.db.config import settings
-from src.models.usuario import Usuario
+from src.db.models.usuario import Usuario
 from src.schemas.usuario import (
     UsuarioCreate,
     UsuarioRead,

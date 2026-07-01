@@ -15,10 +15,10 @@ from sqlalchemy import select, func, and_, or_, case
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db.session import get_async_session
-from src.models.voto import Voto
-from src.models.denuncia import Denuncia
-from src.models.usuario import Usuario, UserRole
-from src.models.enums import StatusDenuncia
+from src.db.models.voto import Voto
+from src.db.models.denuncia import Denuncia
+from src.db.models.usuario import Usuario, UserRole
+from src.db.models.enums import StatusDenuncia
 from src.schemas.voto import VotoCreate, VotoRead, VotoUpdate, RankingItem, VotoStats
 from src.core.deps import get_current_active_user, require_moderator
 

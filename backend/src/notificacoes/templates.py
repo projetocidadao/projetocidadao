@@ -3,7 +3,7 @@ Templates de mensagens — renderização por tipo de notificação.
 Suporta formatação HTML para Telegram e texto puro para in-app/email.
 """
 from typing import Dict, Any
-from src.models.enums import TipoNotificacao, SeveridadeFaro
+from src.db.models.enums import TipoNotificacao, SeveridadeFaro
 
 
 def renderizar_mensagem(

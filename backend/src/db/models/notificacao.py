@@ -8,7 +8,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import JSONB
 
 from src.db.base import Base
-from src.models.enums import TipoNotificacao, CanalNotificacao, StatusNotificacao
+from src.db.models.enums import TipoNotificacao, CanalNotificacao, StatusNotificacao
 
 
 class Notificacao(Base):
@@ -67,5 +67,5 @@ class Notificacao(Base):
     # Relacionamento
     usuario = relationship("Usuario", back_populates="notificacoes", foreign_keys=[usuario_id])
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Notificacao(id={self.id}, tipo={self.tipo}, status={self.status})>"

@@ -80,7 +80,7 @@ class CasoSuspeito(Base):
         "Heuristica", back_populates="caso", cascade="all, delete-orphan"
     )
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<CasoSuspeito {self.tipo.value} score={self.score_risco}>"
 
 
@@ -106,5 +106,5 @@ class Heuristica(Base):
     # Relacionamentos
     caso = relationship("CasoSuspeito", back_populates="heuristicas")
 
-    def __repr__(self) -> str:
+    def ___repr___(self) -> str:
         return f"<Heuristica {self.codigo} - {self.nome[:30]}>"
