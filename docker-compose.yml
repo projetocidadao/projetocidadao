@@ -1,18 +1,18 @@
 name: projeto-cidadao
 
-# =============================================================================
+# =============================================================
 # Projeto Cidadão — Stack completa de desenvolvimento/produção
-# =============================================================================
-# Subir tudo:    docker-compose up -d
-# Ver logs:      docker-compose logs -f api
-# Derrubar:      docker-compose down
-# Resetar dados: docker-compose down -v
-# =============================================================================
+# =============================================================
+# Subir tudo:     docker-compose up -d
+# Ver logs:       docker-compose logs -f api
+# Derrubar:       docker-compose down
+# Resetar dados:  docker-compose down -v
+# =============================================================
 
 services:
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   # Banco de dados (Postgres + PostGIS)
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   db:
     image: postgis/postgis:15-3.4-alpine
     container_name: pc_db
@@ -34,9 +34,9 @@ services:
     networks:
       - pc_net
 
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   # Cache e filas (Redis)
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   redis:
     image: redis:7-alpine
     container_name: pc_redis
@@ -54,9 +54,9 @@ services:
     networks:
       - pc_net
 
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   # API (FastAPI)
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
   api:
     build:
       context: ./backend
@@ -89,62 +89,67 @@ services:
     networks:
       - pc_net
 
-  # ---------------------------------------------------------------------------
-  # Nginx (reverse proxy + SSL)
-  # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------
+  # Nginx (reverse proxy)
+  # ---------------------------------------------------------
+  # Modo desenvolvimento: apenas HTTP na porta 80
+  # Para habilitar HTTPS em produção, descomente a porta 443
+  # e configure os certificados em nginx/ssl/
+  # ---------------------------------------------------------
   nginx:
     image: nginx:1.25-alpine
     container_name: pc_nginx
     restart: unless-stopped
-    ports:
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
+    depends_on:
+      - api
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/certs:/etc/nginx/certs:ro
       - media_data:/var/www/media:ro
-    depends_on:
-      - api
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      # - "${NGINX_HTTPS_PORT:-443}:443"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     networks:
       - pc_net
 
-  # ---------------------------------------------------------------------------
-  # Backup automático (cron diário)
-  # ---------------------------------------------------------------------------
-  backup:
-    image: prodrigestivill/postgres-backup-local
-    container_name: pc_backup
+  # ---------------------------------------------------------
+  # Farejador de Corrupção (worker scheduler)
+  # ---------------------------------------------------------
+  farejador:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pc_farejador
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      POSTGRES_HOST: db
-      POSTGRES_DB: ${POSTGRES_DB:-projetocidadao}
-      POSTGRES_USER: ${POSTGRES_USER:-cidadao}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mudar123}
-      SCHEDULE: "@daily"
-      BACKUP_KEEP_DAYS: 7
-      BACKUP_KEEP_WEEKS: 4
-      BACKUP_KEEP_MONTHS: 6
-      HEALTHCHECK_PORT: 8080
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-cidadao}:${POSTGRES_PASSWORD:-mudar123}@db:5432/${POSTGRES_DB:-projetocidadao}
+      REDIS_URL: redis://redis:6379/0
+      APP_ENV: ${APP_ENV:-production}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      api:
+        condition: service_started
     volumes:
-      - ./backups:/backups
+      - ./backend:/app
+    command: ["python", "-m", "src.farejador.scheduler"]
     networks:
       - pc_net
 
-# =============================================================================
-# Volumes e redes
-# =============================================================================
 volumes:
   pgdata:
-    name: pc_pgdata
   redisdata:
-    name: pc_redisdata
   media_data:
-    name: pc_media
 
 networks:
   pc_net:
-    name: pc_network
     driver: bridge
