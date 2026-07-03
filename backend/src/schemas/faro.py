@@ -12,7 +12,7 @@ class FaroBase(BaseModel):
     tipo_entidade: str = Field(..., max_length=30)
     referencia_id: str = Field(..., max_length=100)
     entidade_nome: Optional[str] = Field(None, max_length=255)
-    heuristicas: List[str] = Field(default_factory=list)
+    heuristicas: List[Dict[str, Any]] = Field(default_factory=list)
     evidencia: Dict[str, Any] = Field(default_factory=dict)
     score_risco: int = Field(default=0, ge=0, le=100)
     severidade: str = Field(default="MEDIA", pattern=r"^(BAIXA|MEDIA|ALTA|CRITICA)$")

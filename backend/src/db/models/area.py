@@ -1,11 +1,8 @@
 """
-Model de Área Temática
+Model de Area Temetica
 """
-import uuid
 from datetime import datetime
-
-from sqlalchemy import Boolean, DateTime, Integer, String, Text, func
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import Boolean, DateTime, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.db.base import Base
@@ -14,30 +11,20 @@ from src.db.base import Base
 class Area(Base):
     __tablename__ = "areas"
 
-    id: Mapped[uuid.UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
-    )
-    slug: Mapped[str] = mapped_column(String(100), unique=True, index=True, nullable=False)
-    nome: Mapped[str] = mapped_column(String(200), nullable=False)
-    descricao: Mapped[str] = mapped_column(Text, nullable=False)
-    icone: Mapped[str] = mapped_column(String(50), nullable=False)  # emoji ou nome de ícone
-    cor: Mapped[str] = mapped_column(String(7), default="#000000")  # hex
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    slug: Mapped[str] = mapped_column(String(80), unique=True, nullable=False, index=True)
+    nome: Mapped[str] = mapped_column(String(150), nullable=False)
+    descricao: Mapped[str] = mapped_column(String(1000), nullable=False)
+    icone: Mapped[str] = mapped_column(String(50), nullable=False)
+    cor: Mapped[str | None] = mapped_column(String(7))
+    artigo_cf: Mapped[str | None] = mapped_column(String(50))
+    ordem: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    ativo: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
-    # Ordem de exibição
-    ordem: Mapped[int] = mapped_column(Integer, default=0)
-    ativo: Mapped[bool] = mapped_column(Boolean, default=True)
-
-    # Auditoria
-    criado_em: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), nullable=False
-    )
-    atualizado_em: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
-
-    # Relacionamentos
-    cursos = relationship("Curso", back_populates="area", cascade="all, delete-orphan")
     denuncias = relationship("Denuncia", back_populates="area")
+    cursos = relationship("Curso", back_populates="area")
 
-    def ___repr___(self) -> str:
-        return f"<Area {self.nome} ({self.slug})>"
+    def __repr__(self) -> str:
+        return f"<Area {self.nome}>"

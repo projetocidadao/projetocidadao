@@ -1,5 +1,5 @@
 """
-Enums do domínio.
+Enums do dominio - alinhados ao schema do banco
 """
 import enum
 
@@ -11,6 +11,28 @@ class UserRole(str, enum.Enum):
     ADMIN = "admin"
 
 
+class StatusDenuncia(str, enum.Enum):
+    AGUARDANDO = "aguardando"
+    EM_ANALISE = "em_analise"
+    EM_ANDAMENTO = "em_andamento"
+    RESOLVIDA = "resolvida"
+    REJEITADA = "rejeitada"
+
+
+class CanalDenuncia(str, enum.Enum):
+    CGU = "cgu"
+    MINISTERIO_PUBLICO = "ministerio_publico"
+    TCU = "tcu"
+    TCE = "tce"
+    OUVIDORIA_FEDERAL = "ouvidoria_federal"
+    OUVIDORIA_ESTADUAL = "ouvidoria_estadual"
+    OUVIDORIA_MUNICIPAL = "ouvidoria_municipal"
+    DEFENSORIA = "defensoria"
+    IBAMA = "ibama"
+    POLICIA_FEDERAL = "policia_federal"
+    OUTRO = "outro"
+
+
 class CategoriaDenuncia(str, enum.Enum):
     SAUDE = "saude"
     EDUCACAO = "educacao"
@@ -19,27 +41,16 @@ class CategoriaDenuncia(str, enum.Enum):
     SEGURANCA = "seguranca"
     SANEAMENTO = "saneamento"
     FINANCAS = "financas"
-    MEIO_AMBIENTE = "meio-ambiente"
+    MEIO_AMBIENTE = "meio_ambiente"
     CULTURA = "cultura"
     OUTRO = "outro"
 
 
-class StatusDenuncia(str, enum.Enum):
-    NOVA = "nova"
-    EM_ANALISE = "em_analise"
-    VERIFICADA = "verificada"
-    EM_INVESTIGACAO = "em_investigacao"
-    RESOLVIDA = "resolvida"
-    REJEITADA = "rejeitada"
-    ARQUIVADA = "arquivada"
-
-
 class StatusFaro(str, enum.Enum):
     NOVO = "novo"
-    EM_REVISAO = "em_revisao"
+    EM_ANALISE = "em_analise"
+    INVESTIGADO = "investigado"
     CONFIRMADO = "confirmado"
-    FALSO_POSITIVO = "falso_positivo"
-    ENCAMINHADO = "encaminhado"
     ARQUIVADO = "arquivado"
 
 
@@ -71,14 +82,24 @@ class TipoNotificacao(str, enum.Enum):
     SISTEMA = "sistema"
 
 
+class StatusCurso(str, enum.Enum):
+    INCUBACAO = "incubacao"
+    EM_APROVACAO = "em_aprovacao"
+    PUBLICADO = "publicado"
+    REJEITADO = "rejeitado"
+    ARQUIVADO = "arquivado"
+
+
 class CanalNotificacao(str, enum.Enum):
     IN_APP = "in_app"
-    TELEGRAM = "telegram"
     EMAIL = "email"
+    PUSH = "push"
+    SMS = "sms"
 
 
 class StatusNotificacao(str, enum.Enum):
     PENDENTE = "pendente"
     ENVIADA = "enviada"
-    FALHOU = "falhou"
-    CANCELADA = "cancelada"
+    ENTREGUE = "entregue"
+    LIDA = "lida"
+    FALHADA = "falhada"

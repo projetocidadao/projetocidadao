@@ -46,7 +46,7 @@ async def register(
         email=dados.email,
         nome=dados.nome,
         senha_hash=hash_senha(dados.senha),
-        bio=dados.bio,
+        biografia=dados.biografia,
         cidade=dados.cidade,
         estado=dados.estado,
     )

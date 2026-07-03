@@ -96,3 +96,31 @@ def status_scheduler() -> dict:
         })
 
     return {"running": _scheduler.running, "jobs": jobs}
+
+
+if __name__ == "__main__":
+    import os
+    import signal
+    import sys
+    import time
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    )
+
+    sched = iniciar_scheduler()
+
+    def _shutdown(signum, frame):
+        logger.info("Recebido sinal %s, parando scheduler...", signum)
+        parar_scheduler()
+        sys.exit(0)
+
+    signal.signal(signal.SIGTERM, _shutdown)
+    signal.signal(signal.SIGINT, _shutdown)
+
+    logger.info("⏳ Scheduler rodando, aguardando jobs... (PID %d)", os.getpid())
+
+    # Mantém o processo vivo
+    while True:
+        time.sleep(60)
