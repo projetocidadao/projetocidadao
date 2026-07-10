@@ -1,0 +1,185 @@
+"""
+Fixtures globais para os testes.
+"""
+import asyncio
+import os
+import pytest
+import pytest_asyncio
+from typing import AsyncGenerator, Generator
+from httpx import AsyncClient, ASGITransport
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
+from sqlalchemy.pool import NullPool
+
+os.environ["APP_ENV"] = "test"
+os.environ["DATABASE_URL"] = os.environ.get(
+    "TEST_DATABASE_URL",
+    "postgresql+asyncpg://postgres:postgres@localhost:5432/projetocidadao_test"
+)
+os.environ["JWT_SECRET"] = "test-secret-key-for-testing-only-32-chars-min"
+
+from src.db.base import Base
+from src.db.session import get_async_session
+from src.core.security import hash_senha, criar_access_token
+from src.db.models.usuario import Usuario
+from src.db.models.enums import UserRole, CategoriaDenuncia, StatusDenuncia
+from src.db.models.denuncia import Denuncia
+from src.db.models.area import Area
+from main import app  # main.py esta em /app/, nao em src/
+
+
+@pytest.fixture(scope="session")
+def event_loop() -> Generator:
+    loop = asyncio.new_event_loop()
+    yield loop
+    loop.close()
+
+
+TEST_DATABASE_URL = os.environ["DATABASE_URL"]
+
+
+@pytest_asyncio.fixture(scope="session")
+async def engine():
+    engine = create_async_engine(TEST_DATABASE_URL, poolclass=NullPool)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+    yield engine
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+    await engine.dispose()
+
+
+@pytest_asyncio.fixture
+async def session(engine) -> AsyncGenerator[AsyncSession, None]:
+    async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+    async with async_session_maker() as session:
+        yield session
+        await session.rollback()
+
+
+@pytest_asyncio.fixture
+async def client(session) -> AsyncGenerator[AsyncClient, None]:
+    async def _override_session():
+        yield session
+
+    app.dependency_overrides[get_async_session] = _override_session
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        yield ac
+    app.dependency_overrides.clear()
+
+
+@pytest_asyncio.fixture
+async def usuario_comum(session: AsyncSession) -> Usuario:
+    u = Usuario(
+        email="cidadao@test.org", nome="Cidadao Teste",
+        senha_hash=hash_senha("senha12345"), role=UserRole.CIDADAO,
+        verificado=True, ativo=True, pontos=0, nivel=1,
+    )
+    session.add(u)
+    await session.commit()
+    await session.refresh(u)
+    return u
+
+
+@pytest_asyncio.fixture
+async def usuario_admin(session: AsyncSession) -> Usuario:
+    u = Usuario(
+        email="admin@test.org", nome="Admin Teste",
+        senha_hash=hash_senha("admin12345"), role=UserRole.ADMIN,
+        verificado=True, ativo=True, pontos=1000, nivel=10,
+    )
+    session.add(u)
+    await session.commit()
+    await session.refresh(u)
+    return u
+
+
+@pytest_asyncio.fixture
+async def usuario_moderador(session: AsyncSession) -> Usuario:
+    u = Usuario(
+        email="moderador@test.org", nome="Moderador Teste",
+        senha_hash=hash_senha("mod12345"), role=UserRole.MODERADOR,
+        verificado=True, ativo=True,
+    )
+    session.add(u)
+    await session.commit()
+    await session.refresh(u)
+    return u
+
+
+@pytest.fixture
+def token_comum(usuario_comum) -> str:
+    return criar_access_token(subject=str(usuario_comum.id))
+
+
+@pytest.fixture
+def token_admin(usuario_admin) -> str:
+    return criar_access_token(subject=str(usuario_admin.id))
+
+
+@pytest.fixture
+def token_moderador(usuario_moderador) -> str:
+    return criar_access_token(subject=str(usuario_moderador.id))
+
+
+@pytest.fixture
+def auth_headers_comum(token_comum) -> dict:
+    return {"Authorization": f"Bearer {token_comum}"}
+
+
+@pytest.fixture
+def auth_headers_admin(token_admin) -> dict:
+    return {"Authorization": f"Bearer {token_admin}"}
+
+
+@pytest.fixture
+def auth_headers_moderador(token_moderador) -> dict:
+    return {"Authorization": f"Bearer {token_moderador}"}
+
+
+@pytest_asyncio.fixture
+async def area_exemplo(session: AsyncSession) -> Area:
+    a = Area(
+        slug="saude", nome="Saude",
+        descricao="Denuncias relacionadas ao SUS", icone="hospital",
+        cor="#dc2626", ativa=True,
+    )
+    session.add(a)
+    await session.commit()
+    await session.refresh(a)
+    return a
+
+
+@pytest_asyncio.fixture
+async def denuncia_exemplo(session: AsyncSession, usuario_comum, area_exemplo) -> Denuncia:
+    d = Denuncia(
+        titulo="Buraco na rua", descricao="Ha um buraco enorme.",
+        categoria=CategoriaDenuncia.TRANSPORTE.value,
+        status=StatusDenuncia.AGUARDANDO, publica=True,
+        autor_id=usuario_comum.id, area_id=area_exemplo.id,
+        municipio="Sao Paulo", estado="SP", codigo_rastreio="PC-TEST0001",
+    )
+    session.add(d)
+    await session.commit()
+    await session.refresh(d)
+    return d
+
+
+@pytest_asyncio.fixture
+async def multiplas_denuncias(session: AsyncSession, usuario_comum, area_exemplo):
+    denuncias = []
+    for i in range(5):
+        d = Denuncia(
+            titulo=f"Denuncia {i+1}", descricao=f"Descricao {i+1}",
+            categoria=CategoriaDenuncia.SAUDE.value,
+            status=StatusDenuncia.AGUARDANDO, publica=True,
+            autor_id=usuario_comum.id, area_id=area_exemplo.id,
+            municipio="Rio", estado="RJ", codigo_rastreio=f"PC-TEST{i:04d}",
+        )
+        session.add(d)
+        denuncias.append(d)
+    await session.commit()
+    for d in denuncias:
+        await session.refresh(d)
+    return denuncias

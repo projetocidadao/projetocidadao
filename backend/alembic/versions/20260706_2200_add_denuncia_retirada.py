@@ -1,0 +1,35 @@
+"""Adiciona campos de retirada/cancelamento em denuncias
+
+Revision ID: 20260706_2200
+Revises: 20260703_0400_enum_rename
+Create Date: 2026-07-06 22:00:00.000000
+"""
+from typing import Sequence, Union
+from alembic import op
+import sqlalchemy as sa
+
+
+revision: str = '20260706_2200'
+down_revision: Union[str, None] = '20260703_0400_enum_rename'
+branch_labels: Union[str, Sequence[str], None] = None
+depends_on: Union[str, Sequence[str], None] = None
+
+
+def upgrade() -> None:
+    op.add_column('denuncias', sa.Column('status_remocao', sa.String(20), nullable=True, index=True))
+    op.add_column('denuncias', sa.Column('removida_em', sa.DateTime(timezone=True), nullable=True))
+    op.add_column('denuncias', sa.Column('removida_por', sa.Integer(), nullable=True))
+    op.create_foreign_key('fk_denuncia_removida_por', 'denuncias', 'usuarios', ['removida_por'], ['id'], ondelete='SET NULL')
+    op.add_column('denuncias', sa.Column('motivo_remocao', sa.Text(), nullable=True))
+    op.add_column('denuncias', sa.Column('pedido_retirada_em', sa.DateTime(timezone=True), nullable=True))
+    op.add_column('denuncias', sa.Column('pedido_retirada_justificativa', sa.Text(), nullable=True))
+
+
+def downgrade() -> None:
+    op.drop_column('denuncias', 'pedido_retirada_justificativa')
+    op.drop_column('denuncias', 'pedido_retirada_em')
+    op.drop_column('denuncias', 'motivo_remocao')
+    op.drop_constraint('fk_denuncia_removida_por', 'denuncias', type_='foreignkey')
+    op.drop_column('denuncias', 'removida_por')
+    op.drop_column('denuncias', 'removida_em')
+    op.drop_column('denuncias', 'status_remocao')

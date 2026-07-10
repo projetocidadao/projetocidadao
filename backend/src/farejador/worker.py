@@ -33,7 +33,7 @@ async def varrer_denuncias_recentes(
     desde = datetime.now(timezone.utc) - timedelta(hours=horas)
     result = await session.execute(
         select(Denuncia).where(
-            and_(Denuncia.criado_em >= desde)
+            and_(Denuncia.created_at >= desde)
         )
     )
     denuncias = list(result.scalars().all())

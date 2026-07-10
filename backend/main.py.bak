@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from src.db.config import settings
 from src.db.session import async_engine
 from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos, anexos
-from src.api import admin_farejador, notificacoes, stats
+from src.api import admin_farejador, notificacoes
 
 try:
     from src.farejador.scheduler import iniciar_scheduler, parar_scheduler
@@ -100,14 +100,12 @@ app.include_router(users.router)
 app.include_router(areas.router)
 app.include_router(cursos.router)
 app.include_router(denuncias.router)
-app.include_router(denuncias.admin_router)
 app.include_router(comentarios.router)
 app.include_router(faros.router)
 app.include_router(votos.router)
 app.include_router(anexos.router)
 app.include_router(admin_farejador.router)
 app.include_router(notificacoes.router)
-app.include_router(stats.router)
 
 
 @app.exception_handler(404)

@@ -27,10 +27,7 @@ class Denuncia(Base):
     codigo_rastreio: Mapped[str] = mapped_column(String(20), unique=True, index=True, nullable=False)
     anonima: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     publica: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
-    autor_id: Mapped[int | None] = mapped_column(
-        ForeignKey("usuarios.id", ondelete="SET NULL", name="fk_denuncia_autor"),
-        index=True,
-    )
+    autor_id: Mapped[int | None] = mapped_column(ForeignKey("usuarios.id", ondelete="SET NULL"), index=True)
     area_id: Mapped[int] = mapped_column(ForeignKey("areas.id"), nullable=False, index=True)
     lat: Mapped[float | None] = mapped_column(Float)
     lng: Mapped[float | None] = mapped_column(Float)
@@ -43,23 +40,19 @@ class Denuncia(Base):
     envolvidos: Mapped[str | None] = mapped_column(Text)
     votos: Mapped[int] = mapped_column(Integer, default=0, nullable=False, index=True)
     visualizacoes: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+
+    # Campos de retirada/cancelamento (issue #9)
     status_remocao: Mapped[str | None] = mapped_column(String(20), index=True)
     removida_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    removida_por: Mapped[int | None] = mapped_column(
-        ForeignKey("usuarios.id", ondelete="SET NULL", name="fk_denuncia_removida_por"),
-        index=True,
-    )
+    removida_por: Mapped[int | None] = mapped_column(ForeignKey("usuarios.id", ondelete="SET NULL"), index=True)
     motivo_remocao: Mapped[str | None] = mapped_column(Text)
     pedido_retirada_em: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     pedido_retirada_justificativa: Mapped[str | None] = mapped_column(Text)
+
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
-    autor = relationship(
-        "Usuario",
-        back_populates="denuncias",
-        foreign_keys="[Denuncia.autor_id]",
-    )
+    autor = relationship("Usuario", back_populates="denuncias")
     area = relationship("Area", back_populates="denuncias")
     anexos = relationship("Anexo", back_populates="denuncia", cascade="all, delete-orphan")
     votos_usuarios = relationship("Voto", back_populates="denuncia", cascade="all, delete-orphan")
