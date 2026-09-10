@@ -47,7 +47,7 @@ Fazer o que é correto, não o que é conveniente. Código aberto, dados auditá
 
 ## Princípio 3 — Honestidade (Xin 信)
 
-**Status: ⚠️ Implementado com gaps**
+**Status: ✅ Implementado**
 
 Palavra cumprida. O que o sistema declara fazer, faz. O que registra, é o que aconteceu.
 
@@ -55,7 +55,7 @@ Palavra cumprida. O que o sistema declara fazer, faz. O que registra, é o que a
 |---|---|
 | `backend/src/services/anonimizacao.py` | Nota de transparência injetada na descrição quando denúncia é retirada |
 | `backend/src/api/denuncias.py` | Operações registradas |
-| ⚠️ **Gap** | Não há changelog público automático das mudanças relevantes |
+| `CHANGELOG.md` | Changelog público humano das mudanças relevantes |
 
 ---
 
@@ -76,7 +76,7 @@ A forma visível do respeito. Interface clara, linguagem acessível, processo do
 
 ## Princípio 5 — Sabedoria (Zhi 智)
 
-**Status: ⚠️ Parcialmente implementado**
+**Status: ✅ Implementado**
 
 Distinguir o certo do errado. Cada cidadão tem direito a informação que permita discernir.
 
@@ -84,13 +84,14 @@ Distinguir o certo do errado. Cada cidadão tem direito a informação que permi
 |---|---|
 | `cursos/` (8 cursos em markdown) | Educação para cidadania: fiscalização, licitações, dados abertos, constitucional |
 | `areas/` (10 áreas temáticas) | Mapeamento de conhecimento por área |
-| ⚠️ **Gap** | Não há sistema de quiz/progresso exposto na API ainda (existem models em `progresso.py` mas sem endpoint ativo) |
+| `backend/src/api/progresso.py` | Endpoint de progresso de cursos (upsert, listagem, stats) |
+| `backend/src/schemas/progresso.py` | Schemas Pydantic de progresso |
 
 ---
 
 ## Princípio 6 — Cultivo Contínuo
 
-**Status: ⚠️ Forte na prática, fraco na documentação**
+**Status: ✅ Implementado**
 
 Nada está pronto. O sistema evolui com o uso, com o erro reconhecido, com a correção pública.
 
@@ -99,7 +100,9 @@ Nada está pronto. O sistema evolui com o uso, com o erro reconhecido, com a cor
 | Issues abertas no GitHub | Cultura de rastreamento público |
 | `.github/workflows/ci.yml` | CI rodando |
 | `backend/alembic/versions/` (7 migrations) | Evolução do schema versionada |
-| ⚠️ **Gap** | Não há `CHANGELOG.md` humano, nem processo explícito de post-mortem de bugs |
+| `CHANGELOG.md` | Changelog público humano |
+| `docs/POST_MORTEM.md` | Processo explícito de post-mortem |
+| `docs/post_mortem/` | Registros de incidentes reais |
 
 ---
 
@@ -109,18 +112,28 @@ Nada está pronto. O sistema evolui com o uso, com o erro reconhecido, com a cor
 |---|---|
 | 1. Humanidade | ✅ Maduro |
 | 2. Retidão | ✅ Bom |
-| 3. Honestidade | ⚠️ Bom com gap (changelog) |
+| 3. Honestidade | ✅ Sem gaps |
 | 4. Rito | ✅ Bom |
-| 5. Sabedoria | ⚠️ Conteúdo pronto, API de cursos não exposta |
-| 6. Cultivo | ⚠️ Prática forte, documentação fraca |
+| 5. Sabedoria | ✅ Implementado |
+| 6. Cultivo | ✅ Implementado |
 
 ---
 
 ## Gaps prioritários
 
-1. **Changelog público** — Princípio 3 + 6
-2. **Endpoint de cursos com progresso** — Princípio 5
-3. **Processo de post-mortem** de bugs encerrados — Princípio 6
+1. ~~**Changelog público** — Princípio 3 + 6~~ ✅ Fechado em 2026-09-10
+2. ~~**Endpoint de cursos com progresso** — Princípio 5~~ ✅ Fechado em 2026-09-10
+3. ~~**Processo de post-mortem** de bugs encerrados — Princípio 6~~ ✅ Fechado em 2026-09-10
+
+---
+
+## Histórico de evolução
+
+### 2026-09-10
+
+- **Gap #1 fechado**: `CHANGELOG.md` criado (Princípio 3 + 6)
+- **Gap #2 fechado**: Endpoint `/api/progresso` criado e validado (Princípio 5)
+- **Gap #3 fechado**: Processo de post-mortem documentado em `docs/POST_MORTEM.md` + primeiro registro real em `docs/post_mortem/2026-09-10-redis-stats-502.md` (Princípio 6)
 
 ---
 
