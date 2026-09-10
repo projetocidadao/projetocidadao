@@ -1,131 +1,147 @@
 # Processo de Post-Mortem
 
-> Toda correção de bug relevante gera um registro público de aprendizado.
-> Princípio 6 (Cultivo Contínuo) do [`PRINCIPIOS.md`](../PRINCIPIOS.md).
+> **Princípio 6 — Transparência:** Aprender com os erros publicamente.
+>
+> Este documento define o processo formal de post-mortem para incidentes,
+> bugs críticos e quedas de serviço no Projeto Cidadão.
 
 ---
 
-## Por que
+## Quando realizar um post-mortem
 
-Bugs acontecem. O que diferencia um projeto maduro de um projeto qualquer
-é a capacidade de **reconhecer publicamente** o que aconteceu, **entender a
-causa raiz**, e **transformar o incidente em aprendizado institucional**.
+Um post-mortem é **obrigatório** quando:
 
-Post-mortems não são para culpar ninguém. São para garantir que o mesmo
-problema não se repita.
+- Queda de serviço (downtime > 5 minutos)
+- Erro 500 em endpoint de produção
+- Perda ou corrupção de dados
+- Vulnerabilidade de segurança explorada
+- Rollback necessário após deploy
+- Bug crítico que afetou usuários
 
----
+Um post-mortem é **opcional mas recomendado** quando:
 
-## Quando fazer
+- Bug resolvido rapidamente sem impacto
+- Melhoria arquitetural significativa
+- Decisão técnica importante revertida
 
-Um post-mortem é obrigatório quando:
+## Prazo e responsabilidade
 
-- 🔴 Incidente de produção (site fora do ar, dados perdidos, etc.)
-- 🟠 Bug crítico corrigido em pânico (correção emergencial)
-- 🟡 Saga de debugging longa (>1 dia de investigação)
-- 🟢 Descoberta de bug antigo latente que exigiu refatoração
-
-Não precisa de post-mortem:
-- Correção typos em docs
-- Ajustes de configuração triviais
-- Features novas (essas vão no CHANGELOG)
-
----
-
-## Como fazer
-
-### 1. Criar o arquivo
-
-Arquivos vivem em `docs/post_mortem/` com o padrão:
-
-```
-YYYY-MM-DD-slug-do-incidente.md
-```
-
-Exemplo: `2026-09-10-redis-stats-502.md`
-
-### 2. Preencher o template
-
-Usar o template abaixo (ver `Template` no final deste arquivo).
-
-### 3. Linkar
-
-- Referenciar a issue do GitHub relacionada
-- Referenciar o commit do fix
-- Adicionar entrada no `CHANGELOG.md` se for incidente de produção
-
-### 4. Atualizar MAPA_PRINCIPIOS
-
-Se o post-mortem fechar um gap, marcar como ✅ no `MAPA_PRINCIPIOS.md`.
-
----
+- **Prazo:** até 48h após o incidente ser resolvido
+- **Responsável:** quem resolveu o incidente
+- **Revisor:** pelo menos 1 outro contribuidor
 
 ## Template
 
+Cada post-mortem deve seguir este template:
+
 ```markdown
-# [Título do incidente]
+# Post-Mortem: [título do incidente]
 
 **Data:** YYYY-MM-DD
-**Severidade:** 🔴/🟠/🟡/🟢
-**Duração do impacto:** Xh Ymin
-**Issue:** #NNN
-**Commit do fix:** ABC1234
+**Duração:** Xh Ymin
+**Impacto:** [descrição do impacto em usuários/sistema]
+**Resolvido por:** [nome]
 
 ## Resumo
 
-[1-2 parágrafos descrevendo o que aconteceu, em linguagem humana]
+[1-2 parágrafos descrevendo o que aconteceu]
 
 ## Linha do tempo
 
-| Hora | Evento |
-|---|---|
-| HH:MM | Sintoma observado |
-| HH:MM | Diagnóstico confirmado |
-| HH:MM | Fix aplicado |
-| HH:MM | Validação |
+- HH:MM — Detecção
+- HH:MM — Diagnóstico
+- HH:MM — Fix aplicado
+- HH:MM — Confirmação de recuperação
 
 ## Causa raiz
 
-[O que realmente causou o problema — não o sintoma]
+[Descrição técnica detalhada da causa raiz]
 
-## Fatores contribuintes
+## Ação corretiva
 
-- [Fator 1]
-- [Fator 2]
+- [x] Fix imediato aplicado
+- [ ] [ação preventiva 1]
+- [ ] [ação preventiva 2]
 
-## O que deu certo
+## Lições aprendidas
 
-- [Coisa que funcionou bem na resposta]
+- [lição 1]
+- [lição 2]
 
-## O que deu errado
+## Links
 
-- [Coisa que atrapalhou ou atrasou]
+- Commit: [hash]
+- Issue: [#N]
+- PR: [#N]
+```
 
-## Ações preventivas
+## Onde armazenar
 
-- [ ] [Ação 1] — responsável: ???
-- [ ] [Ação 2] — responsável: ???
+Post-mortems devem ser commitados em:
 
-## Lições
+```
+docs/post-mortems/YYYY-MM-DD-titulo.md
+```
 
-- [Lição 1]
-- [Lição 2]
+## Exemplo: Post-Mortem #001
 
-## Referências
+### Post-Mortem: Erro 502 Bad Gateway (10/09/2026)
 
-- Issue #NNN
-- Commit ABC1234
-- PR #NNN
+**Data:** 2026-09-10
+**Duração:** ~30min
+**Impacto:** Site indisponível para todos os usuários
+**Resolvido por:** Mira (assistente) + Jim
+
+#### Resumo
+
+O site do Projeto Cidadão retornou erro 502 Bad Gateway após o container
+`pc_api` entrar em loop de reinicialização. A causa foi um arquivo
+`redis_stats.py` que era um **instalador quebrado** sendo importado como
+se fosse um endpoint pelo `main.py`.
+
+#### Causa raiz
+
+O arquivo `src/api/redis_stats.py` continha código de instalador (não de
+endpoint) com 3 bugs:
+
+1. `API_DIR / UND_INIT + ".py"` — `Path + str` não é válido em Python
+2. Indentação quebrada no bloco `__init__.py` patch
+3. `if _name_ == "_main_":` — underscores únicos (saga continua)
+
+O instalador nunca rodou com sucesso. O endpoint real nunca foi escrito
+no disco. Mas o `main.py` importava o arquivo quebrado → crash no boot
+→ nginx sem backend → 502.
+
+#### Ação corretiva
+
+- [x] Substituir instalador pelo endpoint limpo direto no container
+- [x] Commitar versão correta no GitHub (commit 41a9d4a)
+- [x] Atualizar `main.py` com import + `include_router`
+- [ ] Adicionar teste pytest para o endpoint `/api/redis-stats`
+- [ ] Adicionar health check que valida import de todos os módulos
+
+#### Lições aprendidas
+
+- Instaladores devem ser scripts separados, não módulos importáveis
+- Underscores únicos continuam sendo um problema recorrente no projeto
+- Health check do Docker não detecta crash de import (só detecta após
+  container reiniciar)
+- Commits de documentação (.md) não quebram o site, mas mudanças
+  injetadas direto no container sem commit podem
+
+#### Links
+
+- Commit: 41a9d4acedecd0f6d9877bd70a24dab970e507ea
+- Issue: #13
 ```
 
 ---
 
-## Índice de post-mortems
+## Compromisso
 
-| Data | Incidente | Severidade |
-|---|---|---|
-| 2026-09-10 | [redis-stats-502](./post_mortem/2026-09-10-redis-stats-502.md) | 🔴 |
+Ao seguir este processo, garantimos que:
 
----
-
-*Mantido pelo processo de Cultivo Contínuo do Projeto Cidadão.*
+1. **Erros não se repetem** — cada incidente gera aprendizado documentado
+2. **Transparência** — qualquer pessoa pode ver o que aconteceu e por quê
+3. **Melhoria contínua** — ações preventivas são rastreadas até conclusão
+4. **Cultura sem culpa** — foco no sistema, não nas pessoas
