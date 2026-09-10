@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from src.db.config import settings
 from src.db.session import async_engine
 from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos, anexos
-from src.api import admin_farejador, notificacoes, stats, redis_stats
+from src.api import admin_farejador, notificacoes, stats, redis_stats, progresso
 
 try:
     from src.farejador.scheduler import iniciar_scheduler, parar_scheduler
@@ -55,7 +55,7 @@ app = FastAPI(
         "- Votação com gamificação e ranking\n"
         "- Upload de anexos (S3-compatible + dedup por SHA256)\n"
         "- Áreas temáticas (Saúde, Educação, etc.)\n"
-        "- Cursos de capacitação\n"
+        "- Cursos de capacitação com progresso tracking\n"
         "- Comentários em thread\n"
         "- Farejador de Corrupção (heurísticas + scheduler)\n"
         "- Notificações in-app + Telegram + preferências\n"
@@ -110,6 +110,7 @@ app.include_router(admin_farejador.router)
 app.include_router(notificacoes.router)
 app.include_router(stats.router)
 app.include_router(redis_stats.router)
+app.include_router(progresso.router)
 
 
 @app.exception_handler(404)
