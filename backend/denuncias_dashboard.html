@@ -6,429 +6,331 @@
     <title>Dashboard Denúncias — Projeto Cidadão</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e2e8f0;
-            min-height: 100vh;
+            background: #f0f2f5;
+            color: #333;
+            padding: 20px;
         }
         .header {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
+            margin-bottom: 24px;
         }
         .header h1 {
-            font-size: 1.5em;
-            color: #818cf8;
+            color: #1a5276;
+            font-size: 1.8em;
         }
-        .header h1 span { color: #f8fafc; }
-        .header .subtitle { color: #94a3b8; font-size: 0.85em; }
+        .header p {
+            color: #666;
+            font-size: 0.9em;
+        }
         .refresh-btn {
+            display: inline-block;
             padding: 8px 20px;
-            background: linear-gradient(135deg, #6366f1, #818cf8);
+            background: #27ae60;
             color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9em;
-            transition: transform 0.2s;
+            font-size: 14px;
+            margin-top: 8px;
         }
-        .refresh-btn:hover { transform: scale(1.05); }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        /* Cards */
-        .stats-grid {
+        .refresh-btn:hover { background: #219a52; }
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 16px;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
-        .stat-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 12px;
-            padding: 20px;
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
             text-align: center;
-            transition: border-color 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 3px solid;
         }
-        .stat-card:hover { border-color: rgba(99, 102, 241, 0.5); }
-        .stat-card .label {
-            font-size: 0.75em;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        .stat-card .value {
-            font-size: 2em;
-            font-weight: 700;
-            color: #f8fafc;
-        }
-        .stat-card .value.green { color: #4ade80; }
-        .stat-card .value.amber { color: #fbbf24; }
-        .stat-card .value.red { color: #f87171; }
-        .stat-card .value.blue { color: #60a5fa; }
-        .stat-card .value.purple { color: #c084fc; }
-        /* Charts */
+        .card.blue { border-color: #2980b9; }
+        .card.green { border-color: #27ae60; }
+        .card.orange { border-color: #e67e22; }
+        .card.red { border-color: #c0392b; }
+        .card.purple { border-color: #8e44ad; }
+        .card.gray { border-color: #7f8c8d; }
+        .card h3 { font-size: 0.85em; color: #666; margin-bottom: 6px; }
+        .card .value { font-size: 2em; font-weight: 700; color: #1a5276; }
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
         .chart-box {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 12px;
-            padding: 24px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
-        .chart-box h2 {
-            font-size: 1em;
-            color: #c7d2fe;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.15);
-        }
-        /* Tables */
-        .table-box {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 12px;
-            padding: 24px;
+        .chart-box h2 { font-size: 1.1em; color: #1a5276; margin-bottom: 12px; }
+        .chart-box canvas { max-height: 300px; }
+        .full-width { grid-column: 1 / -1; }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             margin-bottom: 20px;
         }
-        .table-box h2 {
-            font-size: 1em;
-            color: #c7d2fe;
-            margin-bottom: 16px;
-        }
+        .section h2 { font-size: 1.1em; color: #1a5276; margin-bottom: 12px; }
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        th {
+        th, td {
+            padding: 10px 14px;
             text-align: left;
-            padding: 10px;
-            color: #94a3b8;
-            font-size: 0.8em;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+            border-bottom: 1px solid #eee;
         }
-        td {
-            padding: 10px;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.08);
+        th { color: #1a5276; font-weight: 600; font-size: 0.9em; }
+        td { font-size: 0.9em; }
+        .engajamento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
-        tr:hover td { background: rgba(99, 102, 241, 0.05); }
-        .badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75em;
-            font-weight: 600;
-        }
-        .badge-green { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
-        .badge-amber { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .badge-red { background: rgba(248, 113, 113, 0.15); color: #f87171; }
-        .badge-blue { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
-        .footer {
+        .engaj-item {
             text-align: center;
-            padding: 20px;
-            color: #64748b;
-            font-size: 0.8em;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
         }
-        .loading { opacity: 0.5; pointer-events: none; }
-        @media (max-width: 600px) {
+        .engaj-item .label { font-size: 0.85em; color: #666; }
+        .engaj-item .val { font-size: 1.6em; font-weight: 700; color: #1a5276; }
+        .loading { text-align: center; padding: 40px; color: #999; }
+        @media (max-width: 768px) {
             .charts-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div>
-            <h1>🇧🇷 <span>Dashboard Denúncias</span></h1>
-            <div class="subtitle">Projeto Cidadão — Transparência e Fiscalização</div>
-        </div>
+        <h1>🇧🇷 Dashboard de Denúncias</h1>
+        <p>Projeto Cidadão — Transparência pública em tempo real</p>
         <button class="refresh-btn" onclick="loadStats()">🔄 Atualizar</button>
     </div>
 
-    <div class="container" id="main">
-        <!-- Cards -->
-        <div class="stats-grid" id="cards"></div>
+    <div id="loading" class="loading">Carregando dados...</div>
 
-        <!-- Gráficos -->
-        <div class="charts-grid">
-            <div class="chart-box">
-                <h2>📈 Denúncias por Mês</h2>
-                <canvas id="chartMes"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>🏛 Denúncias por Área Temática</h2>
-                <canvas id="chartArea"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>📊 Distribuição por Status</h2>
-                <canvas id="chartStatus"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>🏷 Denúncias por Categoria</h2>
-                <canvas id="chartCategoria"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>🗺 Denúncias por Estado</h2>
-                <canvas id="chartEstado"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>🕵️ Farejador — Faros por Heurística</h2>
-                <canvas id="chartFarejador"></canvas>
-            </div>
+    <!-- Cards -->
+    <div class="cards-grid" id="cards" style="display:none">
+        <div class="card blue">
+            <h3>Total Denúncias</h3>
+            <div class="value" id="total">-</div>
         </div>
-
-        <!-- Tabelas -->
-        <div class="table-box">
-            <h2>🏙 Top Municípios</h2>
-            <table id="tblMunicipios">
-                <thead><tr><th>#</th><th>Município</th><th>UF</th><th>Denúncias</th></tr></thead>
-                <tbody></tbody>
-            </table>
+        <div class="card green">
+            <h3>Públicas</h3>
+            <div class="value" id="publicas">-</div>
         </div>
-
-        <div class="table-box">
-            <h2>⭐ Top Cidadãos</h2>
-            <table id="tblUsuarios">
-                <thead><tr><th>#</th><th>Nome</th><th>Denúncias</th><th>Comentários</th><th>Pontos</th></tr></thead>
-                <tbody></tbody>
-            </table>
+        <div class="card orange">
+            <h3>Anônimas</h3>
+            <div class="value" id="anonimas">-</div>
         </div>
-
-        <!-- Engajamento -->
-        <div class="stats-grid" id="engajamento"></div>
-
-        <div class="footer">
-            Dados atualizados automaticamente a cada 60s · <a href="/docs" style="color:#818cf8">API Swagger</a> · <a href="/dashboard" style="color:#818cf8">Redis Dashboard</a>
+        <div class="card purple">
+            <h3>Em Análise</h3>
+            <div class="value" id="em_analise">-</div>
+        </div>
+        <div class="card green">
+            <h3>Resolvidas</h3>
+            <div class="value" id="resolvidas">-</div>
+        </div>
+        <div class="card red">
+            <h3>Retiradas</h3>
+            <div class="value" id="retiradas">-</div>
+        </div>
+        <div class="card gray">
+            <h3>Coação Canceladas</h3>
+            <div class="value" id="coacao">-</div>
+        </div>
+        <div class="card blue">
+            <h3>Áreas Ativas</h3>
+            <div class="value" id="areas">-</div>
         </div>
     </div>
 
+    <!-- Gráficos -->
+    <div class="charts-grid" id="charts" style="display:none">
+        <div class="chart-box">
+            <h2>📅 Denúncias por Mês</h2>
+            <canvas id="mesChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>🏛 Por Área Temática</h2>
+            <canvas id="areaChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>📂 Por Categoria</h2>
+            <canvas id="categoriaChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <h2>🗺 Por Estado (UF)</h2>
+            <canvas id="estadoChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Top Municípios -->
+    <div class="section" id="municipiosSection" style="display:none">
+        <h2>🏙 Top Municípios</h2>
+        <table id="municipiosTable">
+            <thead><tr><th>#</th><th>Município</th><th>UF</th><th>Denúncias</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Engajamento -->
+    <div class="section" id="engajamentoSection" style="display:none">
+        <h2>📊 Engajamento Cidadão</h2>
+        <div class="engajamento-grid" id="engajGrid"></div>
+    </div>
+
+    <!-- Farejador -->
+    <div class="section" id="farejadorSection" style="display:none">
+        <h2>🕵️ Farejador de Corrupção</h2>
+        <div class="engajamento-grid" id="farejadorGrid"></div>
+    </div>
+
     <script>
-    const COLORS = {
-        green: '#4ade80', amber: '#fbbf24', red: '#f87171',
-        blue: '#60a5fa', purple: '#c084fc', indigo: '#818cf8',
-        cyan: '#22d3ee', pink: '#f472b6', orange: '#fb923c',
-        lime: '#a3e635', teal: '#2dd4bf', rose: '#fb7185'
-    };
-    const PALETTE = Object.values(COLORS);
-    const PALETTE_ALPHA = PALETTE.map(c => c + '33');
+        let charts = {};
 
-    let charts = {};
-
-    async function loadStats() {
-        document.getElementById('main').classList.add('loading');
-        try {
-            const resp = await fetch('/api/stats');
-            if (!resp.ok) throw new Error('API retornou ' + resp.status);
-            const data = await resp.json();
-            renderCards(data.geral);
-            renderEngajamento(data.engajamento);
-            renderChartMes(data.por_mes);
-            renderChartArea(data.por_area);
-            renderChartStatus(data.geral);
-            renderChartCategoria(data.por_categoria);
-            renderChartEstado(data.por_estado);
-            renderChartFarejador(data.farejos);
-            renderTblMunicipios(data.top_municipios);
-            renderTblUsuarios(data.top_usuarios);
-        } catch (e) {
-            console.error('Erro:', e);
-            alert('Erro ao carregar dados. Verifique se a API está rodando.');
-        } finally {
-            document.getElementById('main').classList.remove('loading');
+        async function loadStats() {
+            try {
+                const resp = await fetch('/api/stats');
+                const data = await resp.json();
+                render(data);
+            } catch (e) {
+                console.error('Erro:', e);
+                document.getElementById('loading').textContent = 'Erro ao carregar. Verifique se o backend está rodando.';
+            }
         }
-    }
 
-    // ---- Cards ----
-    function renderCards(g) {
-        const cards = [
-            { label: 'Total Denúncias', value: g.total_denuncias, cls: '' },
-            { label: 'Públicas', value: g.denuncias_publicas, cls: 'blue' },
-            { label: 'Anônimas', value: g.denuncias_anonimas, cls: 'purple' },
-            { label: 'Aguardando', value: g.denuncias_aguardando, cls: 'amber' },
-            { label: 'Em Análise', value: g.denuncias_em_analise, cls: 'blue' },
-            { label: 'Resolvidas', value: g.denuncias_resolvidas, cls: 'green' },
-            { label: 'Retiradas', value: g.denuncias_retiradas, cls: 'red' },
-            { label: 'Coação', value: g.denuncias_canceladas_coacao, cls: 'red' },
-            { label: 'Pedidos Pendentes', value: g.pedidos_retirada_pendentes, cls: 'amber' },
-            { label: 'Áreas Ativas', value: g.areas_ativas, cls: 'indigo' },
-            { label: 'Cidadãos', value: g.usuarios_cadastrados, cls: 'cyan' },
-        ];
-        document.getElementById('cards').innerHTML = cards.map(c =>
-            `<div class="stat-card"><div class="label">${c.label}</div><div class="value ${c.cls}">${c.value.toLocaleString('pt-BR')}</div></div>`
-        ).join('');
-    }
+        function render(data) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('cards').style.display = 'grid';
+            document.getElementById('charts').style.display = 'grid';
 
-    function renderEngajamento(e) {
-        const items = [
-            { label: 'Comentários', value: e.total_comentarios, cls: 'blue' },
-            { label: 'Votos', value: e.total_votos, cls: 'green' },
-            { label: 'Visualizações', value: e.total_visualizacoes, cls: 'purple' },
-            { label: 'Média Comentários/Denúncia', value: e.media_comentarios_por_denuncia.toFixed(1), cls: 'amber' },
-            { label: 'Média Visualizações/Denúncia', value: e.media_visualizacoes_por_denuncia.toFixed(1), cls: 'cyan' },
-        ];
-        document.getElementById('engajamento').innerHTML = items.map(c =>
-            `<div class="stat-card"><div class="label">${c.label}</div><div class="value ${c.cls}">${c.value}</div></div>`
-        ).join('');
-    }
+            // Cards
+            const g = data.geral;
+            document.getElementById('total').textContent = g.total_denuncias;
+            document.getElementById('publicas').textContent = g.denuncias_publicas;
+            document.getElementById('anonimas').textContent = g.denuncias_anonimas;
+            document.getElementById('em_analise').textContent = g.denuncias_em_analise;
+            document.getElementById('resolvidas').textContent = g.denuncias_resolvidas;
+            document.getElementById('retiradas').textContent = g.denuncias_retiradas;
+            document.getElementById('coacao').textContent = g.denuncias_canceladas_coacao;
+            document.getElementById('areas').textContent = g.areas_ativas;
 
-    // ---- Charts ----
-    function makeChart(id, config) {
-        if (charts[id]) charts[id].destroy();
-        const ctx = document.getElementById(id).getContext('2d');
-        charts[id] = new Chart(ctx, {
-            ...config,
-            options: {
-                responsive: true,
-                plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 11 } } } },
-                scales: config.scales || undefined,
-                ...config.options
+            // Por Mês (barras)
+            renderBar('mesChart', data.por_mes.map(m => m.mes), data.por_mes.map(m => m.total),
+                'Denúncias', '#2980b9', '📅 Denúncias por Mês');
+
+            // Por Área (doughnut)
+            renderDoughnut('areaChart', data.por_area.map(a => a.area_nome), data.por_area.map(a => a.total));
+
+            // Por Categoria (barras horizontais)
+            renderHorizontalBar('categoriaChart', data.por_categoria.map(c => c.categoria), data.por_categoria.map(c => c.total));
+
+            // Por Estado
+            renderBar('estadoChart', data.por_estado.map(e => e.estado), data.por_estado.map(e => e.total),
+                'Denúncias', '#8e44ad', '🗺 Por Estado');
+
+            // Top Municípios
+            if (data.top_municipios && data.top_municipios.length > 0) {
+                document.getElementById('municipiosSection').style.display = 'block';
+                const tbody = document.querySelector('#municipiosTable tbody');
+                tbody.innerHTML = '';
+                data.top_municipios.forEach((m, i) => {
+                    tbody.innerHTML += `<tr><td>${i+1}</td><td>${m.municipio}</td><td>${m.estado}</td><td>${m.total}</td></tr>`;
+                });
             }
-        });
-    }
 
-    function renderChartMes(meses) {
-        makeChart('chartMes', {
-            type: 'bar',
-            data: {
-                labels: meses.map(m => m.mes),
-                datasets: [
-                    { label: 'Públicas', data: meses.map(m => m.publicas), backgroundColor: COLORS.blue + '99', borderColor: COLORS.blue, borderWidth: 1 },
-                    { label: 'Anônimas', data: meses.map(m => m.anonimas), backgroundColor: COLORS.purple + '99', borderColor: COLORS.purple, borderWidth: 1 }
-                ]
-            },
-            options: {
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(99,102,241,0.1)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(99,102,241,0.1)' }, beginAtZero: true }
-                }
+            // Engajamento
+            if (data.engajamento) {
+                document.getElementById('engajamentoSection').style.display = 'block';
+                const eg = data.engajamento;
+                const items = [
+                    ['Comentários', eg.total_comentarios],
+                    ['Votos', eg.total_votos],
+                    ['Visualizações', eg.total_visualizacoes],
+                    ['Média comentários/denúncia', eg.media_comentarios_por_denuncia],
+                    ['Média visualizações/denúncia', eg.media_visualizacoes_por_denuncia],
+                ];
+                const grid = document.getElementById('engajGrid');
+                grid.innerHTML = '';
+                items.forEach(([label, val]) => {
+                    grid.innerHTML += `<div class="engaj-item"><div class="label">${label}</div><div class="val">${typeof val === 'number' ? (val % 1 !== 0 ? val.toFixed(1) : val) : val}</div></div>`;
+                });
             }
-        });
-    }
 
-    function renderChartArea(areas) {
-        makeChart('chartArea', {
-            type: 'doughnut',
-            data: {
-                labels: areas.map(a => a.area_nome),
-                datasets: [{
-                    data: areas.map(a => a.total),
-                    backgroundColor: PALETTE.slice(0, areas.length),
-                    borderColor: '#1e293b',
-                    borderWidth: 2
-                }]
-            },
-            options: { scales: false, plugins: { legend: { position: 'right' } } }
-        });
-    }
-
-    function renderChartStatus(g) {
-        const labels = ['Aguardando', 'Em Análise', 'Resolvidas', 'Retiradas', 'Coação'];
-        const values = [g.denuncias_aguardando, g.denuncias_em_analise, g.denuncias_resolvidas, g.denuncias_retiradas, g.denuncias_canceladas_coacao];
-        const colors = [COLORS.amber, COLORS.blue, COLORS.green, COLORS.red, COLORS.pink];
-        makeChart('chartStatus', {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{ data: values, backgroundColor: colors, borderColor: '#1e293b', borderWidth: 2 }]
-            },
-            options: { scales: false }
-        });
-    }
-
-    function renderChartCategoria(cats) {
-        makeChart('chartCategoria', {
-            type: 'bar',
-            data: {
-                labels: cats.map(c => c.categoria),
-                datasets: [{
-                    label: 'Denúncias',
-                    data: cats.map(c => c.total),
-                    backgroundColor: PALETTE_ALPHA.slice(0, cats.length),
-                    borderColor: PALETTE.slice(0, cats.length),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(99,102,241,0.1)' }, beginAtZero: true },
-                    y: { ticks: { color: '#94a3b8' }, grid: { display: false } }
-                }
+            // Farejador
+            if (data.farejos) {
+                document.getElementById('farejadorSection').style.display = 'block';
+                const f = data.farejos;
+                const items = [
+                    ['Faros totais', f.total_faros],
+                    ['Ativos', f.faros_ativos],
+                    ['Em análise', f.faros_em_analise],
+                    ['Investigados', f.faros_investigados],
+                ];
+                const grid = document.getElementById('farejadorGrid');
+                grid.innerHTML = '';
+                items.forEach(([label, val]) => {
+                    grid.innerHTML += `<div class="engaj-item"><div class="label">${label}</div><div class="val">${val}</div></div>`;
+                });
             }
-        });
-    }
+        }
 
-    function renderChartEstado(estados) {
-        makeChart('chartEstado', {
-            type: 'bar',
-            data: {
-                labels: estados.map(e => e.estado),
-                datasets: [{
-                    label: 'Denúncias',
-                    data: estados.map(e => e.total),
-                    backgroundColor: COLORS.indigo + '99',
-                    borderColor: COLORS.indigo,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(99,102,241,0.1)' } },
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(99,102,241,0.1)' }, beginAtZero: true }
-                }
-            }
-        });
-    }
+        function renderBar(canvasId, labels, values, label, color, title) {
+            if (charts[canvasId]) charts[canvasId].destroy();
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            charts[canvasId] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{ label, data: values, backgroundColor: color + '99', borderColor: color, borderWidth: 1 }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+        }
 
-    function renderChartFarejador(f) {
-        makeChart('chartFarejador', {
-            type: 'doughnut',
-            data: {
-                labels: f.por_heuristica.map(h => h.categoria),
-                datasets: [{
-                    data: f.por_heuristica.map(h => h.total),
-                    backgroundColor: PALETTE.slice(0, f.por_heuristica.length),
-                    borderColor: '#1e293b',
-                    borderWidth: 2
-                }]
-            },
-            options: { scales: false, plugins: { legend: { position: 'right' } } }
-        });
-    }
+        function renderDoughnut(canvasId, labels, values) {
+            if (charts[canvasId]) charts[canvasId].destroy();
+            const colors = ['#2980b9','#27ae60','#e67e22','#8e44ad','#c0392b','#16a085','#2c3e50','#f39c12','#d35400','#1abc9c'];
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            charts[canvasId] = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [{ data: values, backgroundColor: colors.slice(0, values.length) }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'right' } } }
+            });
+        }
 
-    // ---- Tables ----
-    function renderTblMunicipios(muns) {
-        const tbody = document.querySelector('#tblMunicipios tbody');
-        tbody.innerHTML = muns.map((m, i) =>
-            `<tr><td>${i+1}</td><td>${m.municipio}</td><td><span class="badge badge-blue">${m.estado}</span></td><td><strong>${m.total}</strong></td></tr>`
-        ).join('');
-    }
+        function renderHorizontalBar(canvasId, labels, values) {
+            if (charts[canvasId]) charts[canvasId].destroy();
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            charts[canvasId] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{ label: 'Denúncias', data: values, backgroundColor: '#e67e2299', borderColor: '#e67e22', borderWidth: 1 }]
+                },
+                options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+            });
+        }
 
-    function renderTblUsuarios(users) {
-        const tbody = document.querySelector('#tblUsuarios tbody');
-        tbody.innerHTML = users.map((u, i) =>
-            `<tr><td>${i+1}</td><td>${u.nome}</td><td>${u.total_denuncias}</td><td>${u.total_comentarios}</td><td><span class="badge badge-green">${u.pontos_cidadania}</span></td></tr>`
-        ).join('');
-    }
-
-    // ---- Init ----
-    loadStats();
-    setInterval(loadStats, 60000);
+        loadStats();
+        setInterval(loadStats, 60000);
     </script>
 </body>
 </html>
