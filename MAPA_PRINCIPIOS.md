@@ -1,6 +1,7 @@
 # Mapa de Princípios × Implementação
 
-> Cruzamento dos 6 princípios do [PRINCIPIOS.md](./PRINCIPIOS.md) com o que já existe no código.
+> Acompanhamento vivo de como cada princípio do [`PRINCIPIOS.md`](./PRINCIPIOS.md) se manifesta no código do Projeto Cidadão.
+>
 > Última revisão: 2026-09-10.
 
 ---
@@ -15,9 +16,11 @@
 
 ---
 
-## 1. Humanidade (Ren 仁) — ✅ Maduro
+## Princípio 1 — Humanidade (Ren 仁)
 
-> *Tratar o outro como gostaria de ser tratado.*
+**Status: ✅ Implementado e maduro**
+
+Tratar o outro como gostaria de ser tratado. O sistema é construído para servir pessoas, não o contrário.
 
 | Onde | O que |
 |---|---|
@@ -28,9 +31,11 @@
 
 ---
 
-## 2. Retidão (Yi 义) — ✅ Implementado
+## Princípio 2 — Retidão (Yi 义)
 
-> *Fazer o que é correto, não o que é conveniente.*
+**Status: ✅ Implementado**
+
+Fazer o que é correto, não o que é conveniente. Código aberto, dados auditáveis, decisões transparentes.
 
 | Onde | O que |
 |---|---|
@@ -40,9 +45,11 @@
 
 ---
 
-## 3. Honestidade (Xin 信) — ⚠️ Bom com gap
+## Princípio 3 — Honestidade (Xin 信)
 
-> *O que o sistema declara fazer, faz.*
+**Status: ⚠️ Implementado com gaps**
+
+Palavra cumprida. O que o sistema declara fazer, faz. O que registra, é o que aconteceu.
 
 | Onde | O que |
 |---|---|
@@ -52,9 +59,11 @@
 
 ---
 
-## 4. Rito (Li 礼) — ✅ Implementado
+## Princípio 4 — Rito (Li 礼)
 
-> *A forma visível do respeito.*
+**Status: ✅ Implementado**
+
+A forma visível do respeito. Interface clara, linguagem acessível, processo documentado.
 
 | Onde | O que |
 |---|---|
@@ -65,9 +74,11 @@
 
 ---
 
-## 5. Sabedoria (Zhi 智) — ⚠️ Parcial
+## Princípio 5 — Sabedoria (Zhi 智)
 
-> *Cada cidadão tem direito a informação que permita discernir.*
+**Status: ⚠️ Parcialmente implementado**
+
+Distinguir o certo do errado. Cada cidadão tem direito a informação que permita discernir.
 
 | Onde | O que |
 |---|---|
@@ -77,9 +88,11 @@
 
 ---
 
-## 6. Cultivo Contínuo — ⚠️ Prática forte, documentação fraca
+## Princípio 6 — Cultivo Contínuo
 
-> *Nada está pronto.*
+**Status: ⚠️ Forte na prática, fraco na documentação**
+
+Nada está pronto. O sistema evolui com o uso, com o erro reconhecido, com a correção pública.
 
 | Onde | O que |
 |---|---|
@@ -90,25 +103,37 @@
 
 ---
 
-## Resumo
+## Resumo executivo
 
 | Princípio | Status |
 |---|---|
 | 1. Humanidade | ✅ Maduro |
 | 2. Retidão | ✅ Bom |
-| 3. Honestidade | ⚠️ Gap: changelog público |
+| 3. Honestidade | ⚠️ Bom com gap (changelog) |
 | 4. Rito | ✅ Bom |
-| 5. Sabedoria | ⚠️ Gap: endpoint de cursos com progresso |
-| 6. Cultivo | ⚠️ Gap: changelog + post-mortem |
+| 5. Sabedoria | ⚠️ Conteúdo pronto, API de cursos não exposta |
+| 6. Cultivo | ⚠️ Prática forte, documentação fraca |
 
 ---
 
 ## Gaps prioritários
 
-1. **Changelog público** (`CHANGELOG.md`) — atende Princípio 3 + 6
-2. **Endpoint de cursos com progresso** — atende Princípio 5
-3. **Processo de post-mortem** de bugs encerrados — atende Princípio 6
+1. **Changelog público** — Princípio 3 + 6
+2. **Endpoint de cursos com progresso** — Princípio 5
+3. **Processo de post-mortem** de bugs encerrados — Princípio 6
 
 ---
 
-*Documento vivo. Atualizar a cada nova feature ou correção que afete o mapeamento.*
+## Como contribuir
+
+Este mapa é vivo. Ao implementar uma feature nova, verifique:
+
+- Qual princípio ela atende?
+- Deve ser registrada neste mapa?
+- Há gap que ela fecha?
+
+Ao fechar um gap, marque o símbolo como ✅ e mova a entrada antiga para um histórico de evolução no final do documento.
+
+---
+
+*Mantido por colaboradores do Projeto Cidadão.*
