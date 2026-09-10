@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from src.db.config import settings
 from src.db.session import async_engine
 from src.api import auth, users, areas, cursos, denuncias, comentarios, faros, votos, anexos
-from src.api import admin_farejador, notificacoes, stats
+from src.api import admin_farejador, notificacoes, stats, redis_stats
 
 try:
     from src.farejador.scheduler import iniciar_scheduler, parar_scheduler
@@ -58,7 +58,8 @@ app = FastAPI(
         "- Cursos de capacitação\n"
         "- Comentários em thread\n"
         "- Farejador de Corrupção (heurísticas + scheduler)\n"
-        "- Notificações in-app + Telegram + preferências"
+        "- Notificações in-app + Telegram + preferências\n"
+        "- Dashboard Redis em tempo real (/api/redis-stats)"
     ),
     version="0.5.0",
     lifespan=lifespan,
@@ -108,6 +109,7 @@ app.include_router(anexos.router)
 app.include_router(admin_farejador.router)
 app.include_router(notificacoes.router)
 app.include_router(stats.router)
+app.include_router(redis_stats.router)
 
 
 @app.exception_handler(404)
