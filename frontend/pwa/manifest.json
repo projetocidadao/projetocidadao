@@ -1,0 +1,16 @@
+{
+  "name": "Projeto Cidadão",
+  "short_name": "Cidadão",
+  "description": "Sistema de transparência pública — fiscalize, denuncie, transforme",
+  "start_url": "/app",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#1e40af",
+  "lang": "pt-BR",
+  "icons": [
+    {"src": "/app/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/app/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "categories": ["government", "social"]
+}
