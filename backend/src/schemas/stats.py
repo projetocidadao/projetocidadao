@@ -69,7 +69,7 @@ class StatsFarejos(BaseModel):
     faros_ativos: int
     faros_em_analise: int
     faros_investigados: int
-    por_heuristica: List[StatsPorCategoria]
+    por_heuristicas: List[StatsPorCategoria]
 
 
 class StatsEngajamento(BaseModel):

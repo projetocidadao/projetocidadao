@@ -98,7 +98,6 @@ async def stats_gerais(session: AsyncSession) -> StatsGerais:
         select(func.count(func.distinct(Denuncia.area_id))).where(Denuncia.area_id.isnot(None))
     )).scalar_one()
     usuarios = (await session.execute(select(func.count(Usuario.id)))).scalar_one()
-
     return StatsGerais(
         total_denuncias=total,
         denuncias_publicas=publicas,
@@ -261,29 +260,34 @@ async def stats_farejos(session: AsyncSession) -> StatsFarejos:
         )).scalar_one()
 
         rows = await _safe_query(session, """
-            SELECT heuristica, COUNT(*) AS total
+            SELECT to_jsonb(heuristicas)::text, COUNT(*) AS total
             FROM faros
-            WHERE heuristica IS NOT NULL AND heuristica != ''
-            GROUP BY heuristica
+            WHERE heuristicas IS NOT NULL AND heuristicas::text != ''
+            GROUP BY to_jsonb(heuristicas)
             ORDER BY total DESC
         """)
         heuristicas = [
-            StatsPorCategoria(categoria=r.heuristica, total=r.total, percentual=0.0)
+            StatsPorCategoria(categoria=r[0], total=r[1], percentual=0.0)
             for r in rows
         ]
+
+        return StatsFarejos(
+            total_faros=total,
+            faros_ativos=ativos,
+            faros_em_analise=ativos,
+            faros_investigados=investigados,
+            por_heuristicas=heuristicas,
+        )
     except Exception as e:
         await session.rollback()
         print(f"[stats] farejos indisponivel: {e}")
-        total = ativos = investigados = 0
-        heuristicas = []
-
-    return StatsFarejos(
-        total_faros=total,
-        faros_ativos=ativos,
-        faros_em_analise=ativos,
-        faros_investigados=investigados,
-        por_heuristica=heuristicas,
-    )
+        return StatsFarejos(
+            total_faros=0,
+            faros_ativos=0,
+            faros_em_analise=0,
+            faros_investigados=0,
+            por_heuristicas=[],
+        )
 
 
 async def stats_engajamento(session: AsyncSession) -> StatsEngajamento:

@@ -20,7 +20,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-projetocidadao}
       POSTGRES_USER: ${POSTGRES_USER:-cidadao}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mudar123}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cidadao_123}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/scripts/init-db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
