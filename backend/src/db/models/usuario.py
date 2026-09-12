@@ -33,8 +33,8 @@ class Usuario(Base):
     data_consentimento: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     ultimo_login: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     data_primeira_contribuicao: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-    atualizado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em: Mapped[datetime] = mapped_column("created_at", DateTime(timezone=True), server_default=func.now(), nullable=False)
+    atualizado_em: Mapped[datetime] = mapped_column("updated_at", DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     denuncias = relationship(
         "Denuncia",
