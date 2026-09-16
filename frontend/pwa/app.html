@@ -160,6 +160,18 @@ textarea{resize:vertical;min-height:100px}
     <h2 style="margin-bottom:16px">Meu Progresso</h2>
     <div id="curso-list"></div>
   </div>
+  <div id="s-faros" class="screen">
+    <h2 style="margin-bottom:8px">🔍 Faros do Farejador</h2>
+    <p style="font-size:.75rem;color:var(--txt3);margin-bottom:12px">Sinais detectados automaticamente — já verificados ou em análise</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="filter-btn active" data-f="todas" onclick="filterFaro('todas',this)">Todas</span>
+      <span class="filter-btn" data-f="em_analise" onclick="filterFaro('em_analise',this)">Em análise</span>
+      <span class="filter-btn" data-f="confirmado" onclick="filterFaro('confirmado',this)">Confirmados</span>
+      <span class="filter-btn" data-f="investigado" onclick="filterFaro('investigado',this)">Investigados</span>
+      <span class="filter-btn" data-f="arquivado" onclick="filterFaro('arquivado',this)">Arquivados</span>
+    </div>
+    <div id="faro-list"></div>
+  </div>
   <div id="s-profile" class="screen">
     <div class="prof-avatar" id="prof-initial">?</div>
     <div class="prof-name" id="prof-name">—</div>
@@ -183,6 +195,9 @@ textarea{resize:vertical;min-height:100px}
     </div>
     <div class="bnav-item" onclick="navTo('s-cursos')">
       <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm9.69 6L12 14.18 2.31 9 12 3.82 21.69 9zM12 19l-5-2.73v-5.09L12 14l5-2.82v5.09L12 19z"/></svg>Cursos
+    </div>
+    <div class="bnav-item" onclick="navTo('s-faros')">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Faros
     </div>
     <div class="bnav-item" onclick="navTo('s-profile')">
       <svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"/></svg>Perfil
@@ -257,6 +272,7 @@ function navTo(id) {
   const idx = map[id];
   if (idx !== undefined) document.querySelectorAll('.bnav-item')[idx].classList.add('active');
   if (id === 's-dashboard') loadDashboard();
+  if (id === 's-faros') loadFaros();
   if (id === 's-cursos') loadProgress();
   if (id === 's-profile') loadProfile();
 }
@@ -368,6 +384,60 @@ async function loadProgress() {
     if (!data.length) { list.innerHTML = '<div class="empty">Nenhum progresso registrado</div>'; return; }
     list.innerHTML = data.map(p => `<div class="card"><div class="card-title">Curso #${p.curso_id}</div><div class="card-sub">${p.concluido ? '✅ Concluído' : 'Em andamento'}</div><div class="prog-bar"><div class="prog-fill" style="width:${p.percentual||0}%"></div></div><div class="card-sub" style="margin-top:4px">${p.percentual||0}% concluído</div></div>`).join('');
   } catch(e) { list.innerHTML = '<div class="empty">Sem conexão</div>'; }
+}
+
+let currentFaroFilter = 'todas';
+
+function faroStatusLabel(s) {
+  const m = {em_analise:'Em análise',confirmado:'Confirmado',investigado:'Investigado',arquivado:'Arquivado',novo:'Novo'};
+  return m[s] || s;
+}
+
+function faroSevColor(s) {
+  const m = {CRITICA:'#dc2626',ALTA:'#ea580c',MEDIA:'#ca8a04',BAIXA:'#16a34a'};
+  return m[s] || 'var(--txt3)';
+}
+
+function filterFaro(f, el) {
+  currentFaroFilter = f;
+  document.querySelectorAll('#s-faros .filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  loadFaros();
+}
+
+async function loadFaros() {
+  const list = document.getElementById('faro-list');
+  list.innerHTML = '<div class="spinner"></div>';
+  try {
+    const r = await fetch(API + '/faros/publico' + (currentFaroFilter !== 'todas' ? '?status=' + currentFaroFilter : ''));
+    if (!r.ok) { list.innerHTML = '<div class="empty">Erro ao carregar faros</div>'; return; }
+    const data = await r.json();
+    if (!data.length) { list.innerHTML = '<div class="empty">Nenhum faro encontrado</div>'; return; }
+    list.innerHTML = data.map(f => `<div class="den-item" onclick="viewFaro(${f.id})" style="padding:12px;border-left:3px solid ${faroSevColor(f.severidade)}"><div class="den-title" style="display:flex;justify-content:space-between;align-items:center"><span>${esc(f.entidade_nome||f.referencia_id)}</span><span style="font-size:.7rem;color:${faroSevColor(f.severidade)}">${f.severidade}</span></div><div class="den-meta" style="margin-top:4px"><span class="den-badge badge-${f.status}">${faroStatusLabel(f.status)}</span><span>Score: ${f.score_risco}</span><span>${f.heuristicas?f.heuristicas.length:0} heurísticas</span></div></div>`).join('');
+  } catch(e) { list.innerHTML = '<div class="empty">Sem conexão</div>'; }
+}
+
+async function viewFaro(id) {
+  try {
+    const r = await fetch(API + '/faros/publico');
+    const data = await r.json();
+    const f = data.find(x => x.id === id);
+    if (!f) return toast('Faro não encontrado');
+    showFaroDetail(f);
+  } catch(e) { toast('Sem conexão'); }
+}
+
+function showFaroDetail(f) {
+  document.getElementById('faro-list').style.display = 'none';
+  let dv = document.getElementById('faro-detail');
+  if (!dv) { dv = document.createElement('div'); dv.id = 'faro-detail'; document.getElementById('faro-list').parentNode.insertBefore(dv, document.getElementById('faro-list')); }
+  dv.innerHTML = `<div class="card"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><button onclick="showFaroList()" style="background:none;border:none;color:var(--acc);font-size:18px;cursor:pointer">← Voltar</button></div><div class="card-title">${esc(f.entidade_nome||f.referencia_id)}</div><div class="den-meta" style="margin-top:8px"><span class="den-badge badge-${f.status}">${faroStatusLabel(f.status)}</span><span style="color:${faroSevColor(f.severidade)}">${f.severidade}</span><span>Score: ${f.score_risco}/100</span></div><div class="card-sub" style="margin-top:8px">Tipo: ${esc(f.tipo_entidade)}</div><div class="card-sub">Ref: ${esc(f.referencia_id)}</div>${f.heuristicas&&f.heuristicas.length ? '<div class="card-sub" style="margin-top:8px">Heurísticas: '+f.heuristicas.map(h=>'<span style="background:var(--bg3);padding:2px 8px;border-radius:12px;font-size:.75rem;margin:2px">'+esc(h)+'</span>').join(' ')+'</div>' : ''}${f.desfecho ? '<div class="card-sub" style="margin-top:8px">Desfecho: '+esc(f.desfecho)+'</div>' : ''}<div class="card-sub" style="margin-top:8px;font-size:.7rem;color:var(--txt3)">Detectado em ${new Date(f.data_deteccao).toLocaleDateString('pt-BR')}</div><div class="card-sub" style="font-size:.65rem;color:var(--txt3);margin-top:4px">⚠ Dados gerados automaticamente; podem conter imprecisões.</div></div>`;
+}
+
+function showFaroList() {
+  document.getElementById('faro-list').style.display = '';
+  const dv = document.getElementById('faro-detail');
+  if (dv) dv.innerHTML = '';
 }
 
 async function loadProfile() {
